@@ -7,12 +7,16 @@ const NavBar = () => {
     <div className="navbar">
       <img src={assets.logo} alt="Logo" className="Logo" />
       <ul className="navbar-menu"> 
-      <li>Home  <i class="fa-solid fa-magnifying-glass"></i></li>
-      <li>menu </li>
+      <li>Home </li>
+      <li>Menu </li>
       <li>Mobile-app </li>
       <li>Contact us  </li>
       </ul>
-      
+      <div className="navbar-right">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
+        <i class="fa-solid fa-user"></i>
+      </div>
       
     </div>
   )

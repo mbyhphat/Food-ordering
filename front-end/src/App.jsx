@@ -6,10 +6,10 @@ const App = () => {
   return (
     <div className="app">
       <NavBar />
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 };

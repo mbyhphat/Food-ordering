@@ -1,4 +1,4 @@
-import bo_dau from "./bo dau.jpg";
+import bo_dau from "./bo_dau.jpg";
 import bo_tieu_xanh from "./bo_tieu_xanh.jpg";
 import ca_loc from "./ca_loc.jpg";
 import ca_tai_tuong from "./ca_tai_tuong.jpg";

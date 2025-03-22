@@ -11,49 +11,78 @@ import ga_bo_xoi_3_mau from "./ga_bo_xoi_3_mau.jpg";
 import ga_hap_nuoc_mam from "./ga_hap_nuoc_mam.jpg";
 import ga_ta_hap_cach_thuy from "./ga_ta_hap _cach_thuy.jpg";
 import gio_heo_chien from "./gio_heo_chien.jpg";
-import heo_quay from "./heo_quay.jpg"
-import lau_ca_bop from "./lau_ca_bop.jpg"
-import lau_ga from "./lau_ga.jpg"
-import lau_hai_san from "./lau_hai_san.jpg"
-import lau_suon_be from "./lau_suon_be.jpg"
-import logo from "./Logo.png"
-import sup_cua from "./sup_cua.jpg"
-import sup_hai_san from "./sup_hai_san.jpg"
-import tomg_rang_hongkong from "./tom_rang_hongkong.jpg"
-import tom_su_trung_muoi from "./tom_su_trung_muoi.jpg"
+import heo_quay from "./heo_quay.jpg";
+import lau_ca_bop from "./lau_ca_bop.jpg";
+import lau_ga from "./lau_ga.jpg";
+import lau_hai_san from "./lau_hai_san.jpg";
+import lau_suon_be from "./lau_suon_be.jpg";
+import logo from "./Logo.png";
+import sup_cua from "./sup_cua.jpg";
+import sup_hai_san from "./sup_hai_san.jpg";
+import tomg_rang_hongkong from "./tom_rang_hongkong.jpg";
+import tom_su_trung_muoi from "./tom_su_trung_muoi.jpg";
+import appetizer from "./appetizer.jpg";
+import chicken from "./chicken.jpg";
+import hot_pot from "./hot_pot.jpg";
+import meat from "./meat.jpg";
+import rice from "./rice.jpg";
+import seafood from "./seafood.jpg";
 
 export const assets = {
-    bo_dau,
-    bo_tieu_xanh,
-    ca_loc,
-    ca_tai_tuong,
-    cha_hoang_kim,
-    chao_tom,
-    chicken_1,
-    com_chien,
-    com_ga,
-    ga_bo_xoi_3_mau,
-    ga_hap_nuoc_mam,
-    ga_ta_hap_cach_thuy,
-    gio_heo_chien,
-    heo_quay,
-    lau_ca_bop,
-    lau_ga,
-    lau_hai_san,
-    lau_suon_be,
-    logo,
-    sup_cua,
-    sup_hai_san,
-    tomg_rang_hongkong,
-    tom_su_trung_muoi,
-}
-
+  bo_dau,
+  bo_tieu_xanh,
+  ca_loc,
+  ca_tai_tuong,
+  cha_hoang_kim,
+  chao_tom,
+  chicken_1,
+  com_chien,
+  com_ga,
+  ga_bo_xoi_3_mau,
+  ga_hap_nuoc_mam,
+  ga_ta_hap_cach_thuy,
+  gio_heo_chien,
+  heo_quay,
+  lau_ca_bop,
+  lau_ga,
+  lau_hai_san,
+  lau_suon_be,
+  logo,
+  sup_cua,
+  sup_hai_san,
+  tomg_rang_hongkong,
+  tom_su_trung_muoi,
+  appetizer,
+  chicken,
+  hot_pot,
+  meat,
+  rice,
+  seafood,
+};
 
 export const menu_list = [
-    {
-        menu_name: ""
-    }
-
+  {
+    menu_name: "Tráng miệng",
+    menu_image: appetizer,
+  },
+  {
+    menu_name: "Thịt gà",
+    menu_image: chicken,
+  },
+  {
+    menu_name: "Thịt bò-heo",
+    menu_image: meat,
+  },
+  {
+    menu_name: "Hải sản",
+    menu_image: seafood,
+  },
+  {
+    menu_name: "Cơm - canh",
+    menu_image: rice,
+  },
+  {
+    menu_name: "Lẩu",
+    menu_image: hot_pot,
+  },
 ];
-
-

@@ -1,0 +1,9 @@
+.navbar img{
+    height: 100px;
+    width: auto;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

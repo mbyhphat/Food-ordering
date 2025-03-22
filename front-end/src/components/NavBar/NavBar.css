@@ -1,9 +1,50 @@
-.navbar img{
-    height: 100px;
-    width: auto;
+.navbar img {
+    width: 130px;
+    height: auto;
 }
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    padding: 50px 25px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.navbar ul li:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
+
+.app {
+    width: 80%;
+    margin: auto;
+    padding: 0;
+}
+
+.header {
+    background: #E8E9EB;
+    margin: top 0;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.navbar .navbar-right i {
+    padding: 20px;
+    font-size: 30px;
 }

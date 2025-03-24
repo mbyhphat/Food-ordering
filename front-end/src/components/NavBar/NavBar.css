@@ -1,4 +1,4 @@
-.navbar img {
+.navbar .logo {
     width: 130px;
     height: auto;
 }
@@ -10,7 +10,6 @@
 }
 
 .navbar ul {
-    list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
@@ -29,7 +28,7 @@
 }
 
 .app {
-    width: 80%;
+    width: 85%;
     margin: auto;
     padding: 0;
 }
@@ -43,8 +42,25 @@
     left: 0;
     z-index: 100;
 }
+.navbar-right{
+    display: flex;
+    align-items: center;
+}
 
 .navbar .navbar-right i {
     padding: 20px;
     font-size: 30px;
 }
+.navbar button{
+    margin-left: 20px;
+    border: 1px solid;
+    padding: 10px 30px;
+    border-radius:50px ;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3;
+}
+.navbar button:hover{
+    background: #fff4f2;
+}
+

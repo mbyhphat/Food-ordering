@@ -107,7 +107,7 @@ export const food_list = [
     {
         _id: "3",
         name: "Gà bó xôi 2 màu ôm trứng hạt sen",
-        image: ga_bo_xoi_2_mau,
+        image: chicken_1,
         price: 450000,
         description: "Món gà bó xôi độc đáo với lớp xôi hai màu giòn rụm, bao bọc gà ta thơm mềm, kết hợp trứng muối và hạt sen bùi béo. Món ăn hoàn hảo cho những bữa tiệc sum vầy.",
         category: "Thịt gà"
@@ -131,7 +131,7 @@ export const food_list = [
     {
         _id: "6",
         name: "Gà ta hấp cách thủy",
-        image: ga_hap_cach_thuy,
+        image: ga_ta_hap_cach_thuy,
         price: 370000,
         description: "Gà ta hấp cách thủy giữ trọn vị ngọt tự nhiên, thịt mềm thơm và bổ dưỡng. Món ăn thanh đạm, phù hợp với người thích hương vị tinh tế.",
         category: "Thịt gà"
@@ -139,7 +139,7 @@ export const food_list = [
     {
         _id: "7",
         name: "Bò nấu đậu",
-        image: bo_nau_dau,
+        image: bo_dau,
         price: 250000,
         description: "Món bò nấu đậu thơm ngon với thịt bò hầm mềm, thấm đẫm nước sốt đậm đà, hòa quyện cùng đậu béo bùi. Thích hợp cho những bữa ăn ấm cúng.",
         category: "Thịt bò-heo"
@@ -147,7 +147,7 @@ export const food_list = [
     {
         _id: "8",
         name: "Bò nấu tiêu xanh",
-        image: bo_nau_tieu_xanh,
+        image: bo_tieu_xanh,
         price: 270000,
         description: "Bò nấu tiêu xanh cay nhẹ, dậy mùi thơm đặc trưng từ tiêu xanh tươi, thịt bò hầm mềm, ngọt nước. Món ăn bổ dưỡng, lý tưởng cho mọi bữa tiệc.",
         category: "Thịt bò-heo"
@@ -163,7 +163,7 @@ export const food_list = [
     {
         _id: "10",
         name: "Giò heo chiên giòn",
-        image: gio_heo_chien_gion,
+        image: gio_heo_chien,
         price: 350000,
         description: "Giò heo chiên giòn với lớp da giòn tan, bên trong mềm béo, kết hợp nước chấm đậm đà tạo nên hương vị khó cưỡng. Thích hợp cho bữa tiệc hoặc bữa cơm gia đình.",
         category: "Thịt bò-heo"
@@ -171,7 +171,7 @@ export const food_list = [
     {
         _id: "11",
         name: "Cá lóc quay me",
-        image: ca_loc_quay_me,
+        image: ca_loc,
         price: 280000,
         description: "Cá lóc quay me với lớp da giòn rụm, thịt cá chắc ngọt, hòa quyện cùng nước sốt me chua ngọt hấp dẫn. Món ăn thơm ngon, thích hợp cho mọi bữa tiệc.",
         category: "Hải sản"
@@ -179,7 +179,7 @@ export const food_list = [
     {
         _id: "12",
         name: "Cá tai tượng chiên xù",
-        image: ca_tai_tuong_chien_xu,
+        image: ca_tai_tuong,
         price: 320000,
         description: "Cá tai tượng chiên xù giòn rụm, vàng ươm, thịt cá trắng ngọt, ăn kèm rau sống và nước chấm chua ngọt đậm đà. Món ăn đặc sản không thể bỏ qua.",
         category: "Hải sản"
@@ -187,7 +187,7 @@ export const food_list = [
     {
         _id: "13",
         name: "Tôm sú rang trứng muối",
-        image: tom_su_rang_trung_muoi,
+        image: tom_su_trung_muoi,
         price: 350000,
         description: "Tôm sú rang trứng muối béo ngậy, thơm lừng với lớp sốt trứng muối bám đều từng con tôm, tạo nên hương vị mặn mà, hấp dẫn.",
         category: "Hải sản"
@@ -195,7 +195,7 @@ export const food_list = [
     {
         _id: "14",
         name: "Tôm sú rang muối Hongkong",
-        image: tom_su_rang_muoi_hongkong,
+        image: tomg_rang_hongkong,
         price: 360000,
         description: "Tôm sú rang muối kiểu Hongkong với vị cay nhẹ, lớp vỏ giòn thơm, thấm đều gia vị đặc trưng, tạo nên món ăn đậm đà, hấp dẫn.",
         category: "Hải sản"
@@ -203,7 +203,7 @@ export const food_list = [
     {
         _id: "15",
         name: "Cơm chiên hải sản",
-        image: com_chien_hai_san,
+        image: com_chien,
         price: 150000,
         description: "Cơm chiên hải sản thơm ngon với hạt cơm tơi xốp, kết hợp tôm, mực và nghêu tươi, hòa quyện cùng gia vị đậm đà. Món ăn hấp dẫn cho mọi bữa ăn.",
         category: "Cơm - canh"
@@ -211,7 +211,7 @@ export const food_list = [
     {
         _id: "16",
         name: "Cơm gà lá sen",
-        image: com_ga_la_sen,
+        image: com_ga,
         price: 180000,
         description: "Cơm gà lá sen hấp dẫn với hương thơm đặc trưng từ lá sen, gà ta xé sợi mềm ngọt, kết hợp nấm, hạt sen và gia vị tinh tế. Món ăn bổ dưỡng, đầy hương vị.",
         category: "Cơm - canh"
@@ -227,7 +227,7 @@ export const food_list = [
     {
         _id: "18",
         name: "Súp cua hạt sen",
-        image: sup_cua_hat_sen,
+        image: sup_cua,
         price: 140000,
         description: "Súp cua hạt sen thơm ngon với thịt cua tươi, hạt sen bùi béo, kết hợp cùng nước dùng sánh mịn. Món ăn bổ dưỡng, thích hợp cho mọi lứa tuổi.",
         category: "Cơm - canh"
@@ -235,7 +235,7 @@ export const food_list = [
     {
         _id: "19",
         name: "Lẩu cá bớp măng chua",
-        image: lau_ca_bop_mang_chua,
+        image: lau_ca_bop,
         price: 350000,
         description: "Lẩu cá bớp măng chua với nước dùng chua ngọt thanh mát, cá bớp dai ngon, béo ngậy kết hợp với măng chua giòn sần sật. Món ăn lý tưởng cho những bữa ăn sum vầy.",
         category: "Lẩu"
@@ -243,7 +243,7 @@ export const food_list = [
     {
         _id: "20",
         name: "Lẩu sườn bê nấu rượu hoa tiêu",
-        image: lau_suon_be_ruou_hoa_tieu,
+        image: lau_suon_be,
         price: 450000,
         description: "Lẩu sườn bê nấu rượu hoa tiêu độc đáo với nước dùng đậm đà, thoảng hương rượu nhẹ, sườn bê mềm ngọt, hòa quyện cùng vị cay tê của hoa tiêu. Món ăn đặc biệt, kích thích vị giác.",
         category: "Lẩu"
@@ -251,7 +251,7 @@ export const food_list = [
     {
         _id: "21",
         name: "Lẩu nấm hải sản truyền thống",
-        image: lau_nam_hai_san,
+        image: lau_hai_san,
         price: 400000,
         description: "Lẩu nấm hải sản thanh ngọt với nước dùng ninh từ nấm tự nhiên, kết hợp cùng tôm, mực, ngao tươi ngon. Món ăn bổ dưỡng, thanh đạm nhưng không kém phần hấp dẫn.",
         category: "Lẩu"
@@ -259,7 +259,7 @@ export const food_list = [
     {
         _id: "22",
         name: "Lẩu gà tiềm ớt hiểm",
-        image: lau_ga_tiem_ot_hiem,
+        image: lau_ga,
         price: 380000,
         description: "Lẩu gà tiềm ớt hiểm với gà ta hầm mềm, nước dùng thơm ngon, cay nhẹ từ ớt hiểm giúp kích thích vị giác. Món ăn bổ dưỡng, thích hợp cho những ngày se lạnh.",
         category: "Lẩu"

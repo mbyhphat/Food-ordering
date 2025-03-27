@@ -18,11 +18,18 @@
 
 .food-item-name-info {
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .food-item-name-info p {
   font-size: 20px;
   font-weight: 500;
+}
+
+.custom-star {
+  color: #f69c08;
 }
 
 .food-item-description {
@@ -31,7 +38,7 @@
 }
 
 .food-item-price {
-  color:tomato;
+  color:#f69c08;
   font-size: 22px;
   font-weight: 500;
   margin: 10px 0px;

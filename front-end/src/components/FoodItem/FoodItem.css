@@ -6,6 +6,48 @@
   animation: fadeIn 1s;
 }
 
+.food-item-img-container {
+  position: relative;
+}
+
+.first-add {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.food-item-counter {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.food-item-counter i{
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.next-add {
+  color: red;
+}
+
+.minus {
+  color: green;
+}
+
+.cart-quantity-input {
+  width: 50px;  
+  padding-left: 2px;
+}
+
 .food-item-img {
   width: 100%;
   border-radius: 15px 15px 0px 0px;

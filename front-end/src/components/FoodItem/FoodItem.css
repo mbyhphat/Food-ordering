@@ -10,6 +10,10 @@
   position: relative;
 }
 
+.first-add:hover {
+  transform: scale(1.2);
+}
+
 .first-add {
   position: absolute;
   bottom: 15px;
@@ -33,6 +37,10 @@
 .food-item-counter i{
   font-size: 20px;
   cursor: pointer;
+}
+
+.food-item-counter i:hover {
+  transform: scale(1.2);
 }
 
 .next-add {

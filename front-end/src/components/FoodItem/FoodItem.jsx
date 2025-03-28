@@ -3,9 +3,9 @@ import './FoodItem.css'
 import { StoreContext } from '../../context/StoreContext';
 
 const FoodItem = ({ id, name, price, description, image }) => {
-  
+
   const { cartItems, addToCart, removeFromCart, handleQuantityChange } = useContext(StoreContext);
-  console.log(id);
+
   return (
     <div>
       <div className="food-item">
@@ -18,7 +18,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
                 <i class="fa-solid fa-circle-plus next-add" onClick={() => addToCart(id)}></i>
                 <input type="number" value={cartItems[id] || 0} min="0" onChange={(e) => handleQuantityChange(id, e.target.value)} className="cart-quantity-input" />
                 <i class="fa-solid fa-circle-minus minus" onClick={() => removeFromCart(id)}></i>
-                </div>
+              </div>
           }
         </div>
         <div className="food-item-info">

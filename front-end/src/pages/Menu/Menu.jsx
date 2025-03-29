@@ -8,7 +8,7 @@ const Menu = () => {
   return (
     <div>
       <ExploreMenu category={category} setCategory={setCategory} />
-      <FoodDisplay />
+      <FoodDisplay category={category} />
     </div>
   )
 }

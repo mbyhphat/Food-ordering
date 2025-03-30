@@ -22,7 +22,7 @@ const Login = () => {
           </div>
         </div>
         <button>Đăng nhập</button>
-        <p>Bạn chưa có tài khoản? <span onClick={navigate("/register")}>Đăng ký ngay</span></p>
+        <p>Bạn chưa có tài khoản? <span onClick={() => navigate("/register")}>Đăng ký ngay</span></p>
       </form>
     </div>
   )

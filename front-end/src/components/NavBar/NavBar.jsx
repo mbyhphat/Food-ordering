@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { assets } from "../../assets/assets";
 
@@ -9,7 +9,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <img src={assets.logo} alt="Logo" className="logo" />
+      <Link to='/'><img src={assets.logo} alt="Logo" className="logo" /></Link>
       <ul className="navbar-menu">
         <li onClick={() => {
           setMenu("Home");

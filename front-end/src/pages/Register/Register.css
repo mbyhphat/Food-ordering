@@ -1,6 +1,7 @@
 .register {
   height: calc(100vh - 150px);
   display: flex;
+  margin-top: 150px;
 }
 
 .register-img {

@@ -29,6 +29,7 @@ import rice from "./rice.jpg";
 import seafood from "./seafood.jpg";
 import background_header from "./background_header.avif"
 import bg_header1 from "./bg-header1.avif"
+import logo_footer from "./Logo_footer.png"
 
 export const assets = {
     bo_dau,
@@ -61,7 +62,8 @@ export const assets = {
     rice,
     seafood,
     background_header,
-    bg_header1
+    bg_header1,
+    logo_footer,
 
 };
 

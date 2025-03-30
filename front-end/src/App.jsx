@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
-import ExploreMenu from "./components/Explore Menu/ExploreMenu";
-import FoodDisplay from "./components/FoodDisplay/FoodDisplay";
 import Home from './pages/Home/Home';
 import Menu from "./pages/Menu/Menu";
+import Home from './pages/Home/Home'
+import Cart from "./pages/Cart/Cart";
+import  PlaceOrder  from "./pages/PlaceOrder/PlaceOrder";
 
 const App = () => {
   return (
@@ -14,12 +15,6 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/menu' element={<Menu />} />
       </Routes>
-      {/* <ExploreMenu category={category} setCategory={setCategory} />
-      <FoodDisplay /> */}
-    {/* <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/cart" element={<Cart />} />
-    </Routes> */}
     </div>
     
   );

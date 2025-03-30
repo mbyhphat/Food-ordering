@@ -1,6 +1,6 @@
-.navbar img {
-    width: 130px;
-    height: auto;
+.navbar .logo {
+    height: 110px;
+    width: auto;
 }
 
 .navbar {
@@ -10,26 +10,27 @@
 }
 
 .navbar ul {
-    list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
+    gap: 30px;
 }
 
 .navbar ul li {
     display: inline-block;
-    padding: 50px 25px;
+    
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
+    color: #49557e;
 }
 
 .navbar ul li:hover {
-    background-color: yellow;
+    
     cursor: pointer;
 }
 
 .app {
-    width: 80%;
+    width: 85%;
     margin: auto;
     padding: 0;
 }
@@ -43,8 +44,42 @@
     left: 0;
     z-index: 100;
 }
+.navbar-right{
+    display: flex;
+    align-items: center;
+}
 
 .navbar .navbar-right i {
     padding: 20px;
     font-size: 30px;
+}
+.navbar button{
+    margin-left: 20px;
+    border: 1px solid;
+    padding: 10px 30px;
+    border-radius:50px ;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3;
+}
+.navbar button:hover{
+    background: #fff4f2;
+}
+
+.navbar .active{
+    padding-bottom: 2px;
+    border-bottom: 2px solid #49557e;
+}
+
+.navbar .navbar-right .navbar-search-icon{
+    position: relative;
+} 
+.navbar-search-icon .dot{
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: yellow;
+    border-radius: 5px;
+    top: 8px;
+    right: 8px;
 }

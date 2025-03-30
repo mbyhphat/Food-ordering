@@ -30,6 +30,10 @@
   transition: 0.2s;
 }
 
+.menu-category img:hover {
+  transform: scale(1.05);
+}
+
 .menu-category p {
   margin-top: 10px;
   font-size: 20px;

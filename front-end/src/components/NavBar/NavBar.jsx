@@ -7,7 +7,6 @@ const NavBar = () => {
   const [menu, setMenu] = useState("Menu"); 
 
   return (
-    <div className="header">
       <div className="navbar">
       <img src={assets.logo} alt="Logo" className="logo" />
       <ul className="navbar-menu"> 
@@ -23,7 +22,6 @@ const NavBar = () => {
           <div className="dot"></div>
         </div>
         <button>Đăng nhập</button>
-      </div>
       
     </div>
     </div>

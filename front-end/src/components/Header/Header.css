@@ -1,0 +1,10 @@
+.header{
+    margin-top: 150px;
+    margin-left: auto ;
+    margin-right: auto;
+    background: url(../../assets/bg-home.jpg) no-repeat;
+    height: 50vh;
+    width: 100%;
+    background-size: cover;
+    border-radius: 5px;
+}

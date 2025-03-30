@@ -1,20 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 .app {
-    width: 80%;
+    width: 85%;
     margin: auto;
     padding: 0;
 }
 
-.header {
-    background: #E8E9EB;
-    margin: top 0;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 100;
-}
 
 *{
     padding: 0;

@@ -7,7 +7,8 @@ const NavBar = () => {
   const [menu, setMenu] = useState("Menu"); 
 
   return (
-    <div className="navbar">
+    <div className="header">
+      <div className="navbar">
       <img src={assets.logo} alt="Logo" className="logo" />
       <ul className="navbar-menu"> 
       <li onClick={()=> setMenu("Home") } className={menu==="Home"?"active":""}>Home </li>
@@ -24,6 +25,7 @@ const NavBar = () => {
         <button>Đăng nhập</button>
       </div>
       
+    </div>
     </div>
   )
 };

@@ -28,6 +28,7 @@ import meat from "./meat.jpg";
 import rice from "./rice.jpg";
 import seafood from "./seafood.jpg";
 import background_header from "./background_header.avif"
+import login from "./login.png"
 
 export const assets = {
     bo_dau,
@@ -59,7 +60,8 @@ export const assets = {
     meat,
     rice,
     seafood,
-    background_header
+    background_header,
+    login
 };
 
 export const menu_list = [

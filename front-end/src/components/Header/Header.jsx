@@ -7,7 +7,7 @@ import './Header.css'
       
         <div className='header'>
             <div className="header-contents">
-                <h2>Order your favourite food here</h2>
+                <h2>Đặt món ăn yêu thích của bạn ở đây</h2>
                 <p>Chose from a diverse menu featuring a delectable array of dishes </p>
                 <button>View menu</button>
             </div>

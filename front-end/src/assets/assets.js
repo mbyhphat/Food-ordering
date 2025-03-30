@@ -27,6 +27,7 @@ import hot_pot from "./hot_pot.jpg";
 import meat from "./meat.jpg";
 import rice from "./rice.jpg";
 import seafood from "./seafood.jpg";
+import background_header from "./background_header.avif"
 
 export const assets = {
     bo_dau,
@@ -58,6 +59,7 @@ export const assets = {
     meat,
     rice,
     seafood,
+    background_header
 };
 
 export const menu_list = [

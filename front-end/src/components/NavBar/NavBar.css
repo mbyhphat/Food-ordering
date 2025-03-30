@@ -56,17 +56,20 @@
 .navbar .navbar-right i {
     padding: 20px;
     font-size: 30px;
+    cursor: pointer;
 }
-.navbar button{
+
+.navbar button {
     margin-left: 20px;
     border: 1px solid;
     padding: 10px 30px;
-    border-radius:50px ;
+    border-radius: 50px;
     font-size: 15px;
     cursor: pointer;
     transition: 0.3;
 }
-.navbar button:hover{
+
+.navbar button:hover {
     background: #fff4f2;
 }
 

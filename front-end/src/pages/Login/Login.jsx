@@ -21,7 +21,10 @@ const Login = () => {
             : <i onClick={() => setShowPass(!showPass)} class="fa-solid fa-eye-slash"></i>}
           </div>
         </div>
-        <button>Đăng nhập</button>
+        <p className='login-forget-password'>Quên mật khẩu?</p>
+        <button className='login-button'>Đăng nhập</button>
+        <p>Hoặc tiếp tục với</p>
+        <button className="login-google-button"><i class="fa-brands fa-google login-google-logo" />Đăng nhập bằng Google</button>
         <p>Bạn chưa có tài khoản? <span onClick={() => navigate("/register")}>Đăng ký ngay</span></p>
       </form>
     </div>

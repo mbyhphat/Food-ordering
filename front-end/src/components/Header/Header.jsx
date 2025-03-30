@@ -1,9 +1,11 @@
 import React from 'react'
 import './Header.css'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 
- const Header = () => {
+const Header = () => {
+    const view_menu = useNavigate();
     return (
         <div className='header'>
             <div className="header-two">
@@ -20,7 +22,8 @@ import { assets } from '../../assets/assets'
                 <div className="header-contents">
                     <h2>Đặt món ăn yêu thích của bạn ở đây</h2>
                     <p>Lựa chọn từ thực đơn đa dạng với nhiều món ăn hấp dẫn được chế biến từ những nguyên liệu hảo hạng và chuyên môn ẩm thực. Sứ mệnh của chúng tôi là thỏa mãn cơn thèm ăn của bạn và nâng tầm trải nghiệm ăn uống của bạn, từng bữa ăn ngon một </p>
-                    <button>View menu</button>
+                    <button onClick={()=>view_menu("/menu")
+                    }>View menu</button>
                 </div>  
             </div>
             

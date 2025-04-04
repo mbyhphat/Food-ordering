@@ -56,6 +56,17 @@
   padding-left: 2px;
 }
 
+.cart-quantity-input {
+  -moz-appearance: textfield;
+  appearance: none;
+}
+
+.cart-quantity-input::-webkit-inner-spin-button,
+.cart-quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .food-item-img {
   width: 100%;
   border-radius: 15px 15px 0px 0px;

@@ -21,6 +21,17 @@ const StoreContextProvider = (props) => {
     setCartItems((prev) => ({...prev,[itemId]:prev[itemId] - 1}))
   }
 
+  const getTotalCartAmount = () => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        let intemInfo = food_list.find((product) => product._id === item);
+        totalAmount += intemInfo.price * cartItems[item];
+      }
+    }
+    return totalAmount;
+  }
+
   const handleQuantityChange = (itemId, value) => {
     const newQuantity = parseInt(value, 10); // Convert input (string) to a number
 
@@ -35,7 +46,8 @@ const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
-    handleQuantityChange
+    handleQuantityChange,
+    getTotalCartAmount
   }
 
   return (

@@ -2,6 +2,7 @@
   height: calc(100vh - 150px);
   display: flex;
   margin-top: 150px;
+  transition: margin-bottom 0.3s ease;
 }
 
 .register h2 {

@@ -2,7 +2,7 @@ import React, { createRef, useState } from "react";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
-import axiosClient from "./../../../../../food-ordering-app/front-end/src/axios-client";
+import axiosClient from "./../../axios-client";
 
 const Register = () => {
     const [showPass, setShowPass] = useState(false);
@@ -32,12 +32,15 @@ const Register = () => {
         axiosClient
             .post("/register", payload)
             .then(() => {
-                setSuccessMessage("Đăng ký thành công! Vui lòng đăng nhập.");
+                setSuccessMessage(
+                    "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục."
+                );
                 setTimeout(() => {
                     navigate("/login");
                 }, 1500);
             })
             .catch((err) => {
+                console.log(err);
                 const response = err.response;
                 if (response && response.status === 422) {
                     setErrors(response.data.errors);
@@ -46,19 +49,22 @@ const Register = () => {
     };
 
     return (
-        <div className="register">
+        <div
+            className="register"
+            style={{ marginBottom: errors ? "300px" : "0" }}
+        >
             <img src={assets.login} alt="" className="register-img" />
-            <form className="register-container" onSubmit={onSubmit}>
+            <form className="register-container" onSubmit={onSubmit} noValidate>
                 <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
                 {errors && (
-                    <div className="alert">
+                    <div className="alert alert-danger" role="alert">
                         {Object.keys(errors).map((key) => (
-                            <p key={key}>{errors[key][0]}</p>
+                            <li key={key}>{errors[key][0]}</li>
                         ))}
                     </div>
                 )}
                 {successMessage && (
-                    <div className="alert alert-success">
+                    <div className="alert alert-success" role="alert">
                         <p>{successMessage}</p>
                     </div>
                 )}

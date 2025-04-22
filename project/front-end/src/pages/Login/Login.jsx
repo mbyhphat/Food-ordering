@@ -1,22 +1,71 @@
-import React, { useState } from "react";
+import React, { createRef, useState } from "react";
 import { assets } from "../../assets/assets";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../context/ContextProvider";
+import axiosClient from "../../axios-client";
 
 const Login = () => {
     const [showPass, setShowPass] = useState(false);
+    const emailRef = createRef();
+    const passwordRef = createRef();
+    const { setUser, setToken } = useAppContext();
+    const [errors, setErrors] = useState(null);
+    const [successMessage, setSuccessMessage] = useState("");
     const navigate = useNavigate();
+
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+        const payload = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
+
+        axiosClient
+            .post("/login", payload)
+            .then(({ data }) => {
+                console.log(data);
+                setUser(data.user);
+                setToken(data.token);
+                setSuccessMessage("Đăng nhập thành công.");
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.message);
+                }
+            });
+    };
 
     return (
         <div className="login">
             <img src={assets.login} alt="" className="login-img" />
-            <form className="login-container">
+            <form className="login-container" onSubmit={onSubmit} noValidate>
                 <h2>ĐĂNG NHẬP</h2>
+                {errors && (
+                    <div className="alert alert-danger" role="alert">
+                        <p>{errors}</p>
+                    </div>
+                )}
+                {successMessage && (
+                    <div className="alert alert-success" role="alert">
+                        <p>{successMessage}</p>
+                    </div>
+                )}
                 <div className="login-inputs">
-                    <input type="text" placeholder="Tên đăng nhập" required />
+                    <input
+                        type="email"
+                        ref={emailRef}
+                        placeholder="Địa chỉ email"
+                        required
+                    />
                     <div className="login-password">
                         <input
                             type={showPass ? "text" : "password"}
+                            ref={passwordRef}
                             placeholder="Mật khẩu"
                             required
                         />

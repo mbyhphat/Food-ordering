@@ -33,7 +33,7 @@ const Register = () => {
             .post("/register", payload)
             .then(() => {
                 setSuccessMessage(
-                    "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục."
+                    "Bạn đã đăng ký thành công. Vui lòng đăng nhập để tiếp tục!"
                 );
                 setTimeout(() => {
                     navigate("/login");

@@ -1,0 +1,75 @@
+.header{
+    margin-top: 150px;
+}
+/* header-one */
+.header-one{
+    margin-left: auto ;
+    margin-right: auto;
+    background: url(../../assets/background_header.avif) no-repeat;
+    height: 80vh;
+    width: 100%;
+    background-size: cover; /* Giữ tỷ lệ và bao phủ toàn bộ */
+    background-position: center center; /* Căn giữa */
+    border-radius: 20px;
+    position: relative;
+
+}
+
+.header .header-contents {
+    position: absolute;
+    top: 50%;
+    left: 50%; /* Nếu muốn căn giữa theo cả chiều ngang */
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+    max-width: 50%;
+    animation: fadeIn 3s;
+}
+
+.header-one .header-contents h2 {
+    font-weight: 500;
+    font-size: 40px;
+    color: #747474;
+}
+.header-one .header-contents p{
+    font-size: 18px;
+    color: #747474;
+}
+.header-one .header-contents button{
+    border: none;
+    color: #747474;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: white;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+/* End header-one */
+
+/* header-two */
+.header-two{
+    display: flex;
+    margin-bottom: 30px;
+   
+    justify-content: space-between;
+    animation: fadeIn 3s;
+    align-items: center;
+}
+.header-two img{
+    width: 45%;
+    border-radius: 20px;
+}
+.header-two .inner-wrap{
+    width: 50%;
+}
+.header-two .inner-wrap h2{
+    color: #747474;
+}
+.header-two .inner-wrap p{
+    margin-bottom: 10px;
+    color: #747474;
+}
+/*End header-two */

@@ -1,0 +1,121 @@
+/* .header-one {
+    width: 100% !important;
+    background: #E8E9EB;
+    margin: top 0;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+} */
+.navbar .logo {
+    height: 110px;
+    width: auto;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 7.5%;
+    z-index: 100;
+    background: #E8E9EB;
+}
+
+.navbar ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+}
+
+.navbar ul li {
+    list-style-type: none;
+    font-weight: 500;
+    font-size: 18px;
+    color: #49557e;
+    
+}
+
+
+.navbar ul li:hover {
+    
+    cursor: pointer;
+}
+
+.navbar-right{
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-right i {
+    padding: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.navbar button {
+    margin-left: 20px;
+    border: 1px solid;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3;
+}
+
+.navbar button:hover {
+    background: #fff4f2;
+}
+
+.navbar li {
+    position: relative; /* Để làm cha cho ::after */
+    padding-bottom: 2px;
+    color: #202124;
+}
+
+.navbar li::after {
+    content: "";
+    transition: all 0.5s ease;
+    position: absolute;
+    bottom: 0;
+    height: 2px; /* Độ dày gạch chân */
+    width: 0; /* Ẩn ban đầu */
+    background-color: #202124;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.navbar li:hover::after {
+    width: 100%; /* Hiệu ứng mở rộng khi hover */
+}
+.navbar .active {
+    position: relative; /* Để làm cha cho ::after */
+   
+    padding-bottom: 2px;
+    color: #202124;
+}
+
+
+
+
+
+
+
+.navbar .navbar-right .navbar-search-icon{
+    position: relative;
+} 
+.navbar-search-icon .dot{
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: yellow;
+    border-radius: 5px;
+    top: 8px;
+    right: 8px;
+}

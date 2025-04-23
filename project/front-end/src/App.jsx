@@ -8,6 +8,7 @@ import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import { Footer } from "./components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                     </Routes>
                 </main>
             </div>
+            <ToastContainer />
             <Footer />
         </>
     );

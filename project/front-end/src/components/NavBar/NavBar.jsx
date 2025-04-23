@@ -5,6 +5,7 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import { useAppContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
     const navigate = useNavigate();
@@ -19,6 +20,9 @@ const NavBar = () => {
         axiosClient.post("/logout").then(() => {
             setUser({});
             setToken(null);
+            toast.info("Bạn đã đăng xuất khỏi ứng dụng!", {
+                autoClose: 1500,
+            });
         });
     };
 

@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\CategoryResource;
+use App\Models\Food;
+use App\Http\Requests\StoreFoodRequest;
+use App\Http\Requests\UpdateFoodRequest;
 
-class CategoryController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return CategoryResource::collection(Category::all());
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreFoodRequest $request)
     {
         //
     }
@@ -28,7 +27,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Food $food)
     {
         //
     }
@@ -36,7 +35,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateFoodRequest $request, Food $food)
     {
         //
     }
@@ -44,7 +43,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Food $food)
     {
         //
     }

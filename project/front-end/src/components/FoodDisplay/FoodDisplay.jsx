@@ -7,6 +7,8 @@ import axiosClient from "../../axios-client";
 const FoodDisplay = ({ category }) => {
     const { food_list } = useContext(StoreContext);
 
+    useEffect(() => {});
+
     return (
         <div className="food-display" id="food-display">
             <h2>Danh sách món ăn</h2>

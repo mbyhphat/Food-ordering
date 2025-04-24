@@ -1,20 +1,40 @@
-import React from "react";
-import { menu_list } from "../../assets/assets";
+import React, { useEffect, useState } from "react";
 import "./ExploreMenu.css";
+import axiosClient from "../../axios-client";
+import { toast } from "react-toastify";
 
 const ExploreMenu = ({ category, setCategory }) => {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        axiosClient
+            .get("/category")
+            .then(({ data }) => {
+                console.log(data);
+                setCategories(data.data);
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    toast.error(response.data.message);
+                }
+            });
+    }, []);
+
     return (
         <div className="explore-menu">
             <h1>Thực đơn</h1>
             <div className="menu-category-list">
-                {menu_list.map((item, index) => {
+                {categories.map((item, index) => {
+                    const categoryName = item.name;
+                    const categoryImage = item.image_url;
+
                     return (
                         <div
                             onClick={() =>
                                 setCategory(
-                                    category === item.menu_name
+                                    category === categoryName
                                         ? "All"
-                                        : item.menu_name
+                                        : categoryName
                                 )
                             }
                             key={index}
@@ -22,12 +42,12 @@ const ExploreMenu = ({ category, setCategory }) => {
                         >
                             <img
                                 className={
-                                    category === item.menu_name ? "active" : ""
+                                    category === categoryName ? "active" : ""
                                 }
-                                src={item.menu_image}
+                                src={categoryImage}
                                 alt=""
                             />
-                            <p>{item.menu_name}</p>
+                            <p>{categoryName}</p>
                         </div>
                     );
                 })}

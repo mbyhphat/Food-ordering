@@ -24,7 +24,6 @@ const Login = () => {
         axiosClient
             .post("/login", payload)
             .then(({ data }) => {
-                console.log(data);
                 setUser(data.user);
                 setToken(data.token);
                 setSuccessMessage("Đăng nhập thành công.");

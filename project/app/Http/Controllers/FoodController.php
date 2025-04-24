@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
+use App\Http\Resources\FoodResource;
 
 class FoodController extends Controller
 {
@@ -13,7 +14,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        $foods = Food::with('category')->get();
+        return FoodResource::collection($foods);
     }
 
     /**

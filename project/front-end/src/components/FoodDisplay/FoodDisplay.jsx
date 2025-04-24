@@ -1,31 +1,34 @@
-import React, { useContext, useEffect } from "react";
-import { StoreContext } from "../../context/StoreContext";
+import React, { useEffect, useState } from "react";
 import FoodItem from "../FoodItem/FoodItem";
 import "./FoodDisplay.css";
 import axiosClient from "../../axios-client";
 
 const FoodDisplay = ({ category }) => {
-    const { food_list } = useContext(StoreContext);
+    const [food, setFood] = useState([]);
 
-    useEffect(() => {});
+    useEffect(() => {
+        axiosClient.get("/food").then(({ data }) => {
+            setFood(data.data);
+        });
+    }, []);
 
     return (
         <div className="food-display" id="food-display">
             <h2>Danh sách món ăn</h2>
             <div className="food-display-list">
-                {food_list.map((item, index) => {
+                {food.map((item, index) => {
                     if (
                         category.toLowerCase() === "all" ||
-                        category === item.category
+                        category === item.category_name
                     )
                         return (
                             <FoodItem
                                 key={index}
-                                id={item._id}
+                                id={item.item_id}
                                 name={item.name}
                                 price={item.price}
                                 description={item.description}
-                                image={item.image}
+                                image={item.image_url}
                             />
                         );
                 })}

@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
-import ExploreMenu from '../../components/Explore Menu/ExploreMenu'
-import FoodDisplay from '../../components/FoodDisplay/FoodDisplay'
+import React from "react";
+import ExploreMenu from "../../components/Explore Menu/ExploreMenu";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 const Menu = () => {
-  const [category, setCategory] = useState("All")
+    const { category = "All" } = useParams();
+    const navigate = useNavigate();
 
-  return (
-    <div>
-      <ExploreMenu category={category} setCategory={setCategory} />
-      <FoodDisplay category={category} />
-    </div>
-  )
-}
+    const handleCategoryChange = (newCategory) => {
+        navigate(newCategory === "All" ? "/menu" : `/menu/${newCategory}`);
+    };
 
-export default Menu
+    return (
+        <div>
+            <ExploreMenu
+                category={category}
+                setCategory={handleCategoryChange}
+            />
+            <Outlet />
+        </div>
+    );
+};
+
+export default Menu;

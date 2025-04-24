@@ -1,0 +1,98 @@
+.login {
+  height: calc(100vh - 150px);
+  display: flex;
+  margin-top: 150px;
+}
+
+.login-img {
+  width: auto;
+  height: 500px;
+  margin-top: 40px;
+}
+
+.login h2 {
+  text-align: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 120px;
+}
+
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px  0px; 
+}
+
+.login-inputs input {
+  padding: 10px;
+  width: 600px;
+  font-size: 20px;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+}
+
+.login-inputs input:focus {
+  border-bottom: 2px solid blue;
+}
+
+.login-password {
+  position: relative;
+}
+
+.login-password i {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}
+
+.login-forget-password {
+  font-size: 16px !important;
+  text-align: right;
+  cursor: pointer;
+}
+
+.login-button {
+  padding: 10px;
+  margin: 20px 0px;
+  font-size: 20px;
+  background-color: green;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login p {
+  font-size: 18px;
+}
+
+.login-google-button {
+  padding: 10px;
+  margin: 20px 0px;
+  font-size: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-google-logo {
+  color: blue;
+  margin-right: 7px;
+}
+
+.login p span {
+  color: brown;
+  font-weight: bold;
+  cursor: pointer;
+}

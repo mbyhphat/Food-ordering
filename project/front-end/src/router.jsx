@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import RootLayout from "./pages/RootLayout/RootLayout";
 import Category from "./pages/Category/Category";
+import Chat from "./components/CustomerSupport/CustomerSupport";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
             { path: "cart", element: <Cart /> },
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
+            { path: "chat", element: <Chat /> },
         ],
     },
 ]);

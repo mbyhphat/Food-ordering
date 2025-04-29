@@ -1,0 +1,12 @@
+sqlalchemy
+mysql-connector-python
+notebook
+ipykernel
+langchain
+python-dotenv
+pinecone
+langchain-pinecone
+langchain_community
+langchain_openai
+flask
+flask_cors

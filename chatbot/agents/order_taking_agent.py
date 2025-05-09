@@ -1,6 +1,6 @@
 import json
 from copy import deepcopy
-from utils import get_chatbot_response, get_db
+from .utils import get_chatbot_response, get_db
 
 
 class OrderTakingAgent:

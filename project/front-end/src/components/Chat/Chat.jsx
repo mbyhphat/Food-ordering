@@ -33,7 +33,7 @@ const Chat = () => {
 
     return (
         <div class="card">
-            <div class="chat-header">Chat</div>
+            <div class="chat-header">Mama's Food Bot</div>
             <div class="chat-window">
                 <ul class="message-list"></ul>
                 {messages.map((message, idx) => (

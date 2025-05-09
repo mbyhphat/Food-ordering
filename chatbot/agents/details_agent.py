@@ -1,6 +1,6 @@
 import json
 from copy import deepcopy
-from utils import get_chatbot_response, get_agent
+from .utils import get_chatbot_response, get_agent
 
 
 class DetailsAgent:

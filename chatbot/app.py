@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from guard_agent import GuardAgent
-from classification_agent import ClassificationAgent
-from details_agent import DetailsAgent
-from order_taking_agent import OrderTakingAgent
+from agents import (
+    GuardAgent,
+    ClassificationAgent,
+    DetailsAgent,
+    OrderTakingAgent,
+    AgentProtocol,
+)
 
 app = Flask(__name__)
 CORS(app)  # cho phép React gọi cross-origin
@@ -12,7 +15,7 @@ CORS(app)  # cho phép React gọi cross-origin
 # Khởi tạo agents một lần
 guard_agent = GuardAgent()
 classification_agent = ClassificationAgent()
-agent_dict = {
+agent_dict: dict[str, AgentProtocol] = {
     "details_agent": DetailsAgent(),
     "order_taking_agent": OrderTakingAgent(),
 }

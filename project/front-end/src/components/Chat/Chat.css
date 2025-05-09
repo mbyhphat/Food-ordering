@@ -7,13 +7,13 @@
     position: absolute;
     bottom: 100px;
     right: 0px;
-    width: 300px;
+    width: 366.4px;
     
 }
 
 .chat-header {
-    background-color: #333;
-    color: #fff;
+    background-color: yellow;
+    color: #333;
     padding: 10px;
     font-size: 18px;
     border-top-left-radius: 5px;
@@ -21,7 +21,7 @@
 }
 
 .chat-window {
-    height: 220px;
+    height: 400.4px;
     overflow-y: scroll;
 }
 
@@ -49,8 +49,8 @@
 .send-button {
     border: none;
     outline: none;
-    background-color: #333;
-    color: #fff;
+    background-color: yellow;
+    color: #333;
     font-size: 14px;
     padding: 5px 10px;
     cursor: pointer;

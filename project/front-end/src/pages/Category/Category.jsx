@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import FoodDisplay from "../../components/FoodDisplay/FoodDisplay";
 
 const Category = () => {
-    const { category = "All" } = useParams();
-    return <FoodDisplay category={category} />;
+    const { category } = useParams();
+    return <FoodDisplay category={category || "all"} />;
 };
 
 export default Category;

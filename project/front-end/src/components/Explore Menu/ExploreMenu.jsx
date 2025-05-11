@@ -9,7 +9,6 @@ const ExploreMenu = ({ category, setCategory }) => {
         axiosClient
             .get("/category")
             .then(({ data }) => {
-                console.log(data);
                 setCategories(data.data);
             })
             .catch((err) => {

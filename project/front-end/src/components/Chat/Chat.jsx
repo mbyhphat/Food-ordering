@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import axios from "axios";
 
@@ -6,6 +6,11 @@ const Chat = () => {
     const [messages, setMessages] = useState([]); // history
     const [input, setInput] = useState(""); // giá trị ô input
     const [loading, setLoading] = useState(false); // loading indicator
+    const bottomRef = useRef(null);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     const sendMessage = async () => {
         if (!input.trim()) return;
@@ -35,12 +40,34 @@ const Chat = () => {
         <div class="card">
             <div class="chat-header">Mama's Food Bot</div>
             <div class="chat-window">
-                <ul class="message-list"></ul>
-                {messages.map((message, idx) => (
-                    <li key={idx}>
-                        <strong>{message.role}:</strong> {message.content}
-                    </li>
-                ))}
+                <ul className="list-unstyled message-list">
+                    {messages.map((message, idx) => {
+                        const isUser = message?.role === "user";
+                        return (
+                            <li
+                                key={idx}
+                                className={`d-flex ${
+                                    isUser
+                                        ? "justify-content-end  me-2 mt-1"
+                                        : "justify-content-start ms-3"
+                                } mb-2`}
+                            >
+                                <div
+                                    className={`message-bubble p-2 px-3 border rounded-5 ${
+                                        isUser
+                                            ? "bg-yellow-custom border-secondary text-start"
+                                            : "bg-light border-primary text-start"
+                                    }`}
+                                >
+                                    <span className="small">
+                                        {message.content}
+                                    </span>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+                <div ref={bottomRef} />
             </div>
             <div class="chat-input">
                 <input

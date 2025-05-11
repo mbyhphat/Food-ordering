@@ -10,7 +10,7 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 
-def get_client(temperature=0, top_p=0.8, max_tokens=2000):
+def get_client(temperature=0.1, top_p=0.8, max_tokens=2000):
     llm = ChatOpenAI(
         model=os.getenv("MODEL_NAME"),
         temperature=temperature,
@@ -37,7 +37,10 @@ def get_agent(system_prompt):
 
 
 def get_db():
-    db = SQLDatabase.from_uri("mysql+mysqlconnector://root:@localhost/foodordering")
+    db = SQLDatabase.from_uri(
+        "mysql+mysqlconnector://root:@localhost/foodordering",
+        sample_rows_in_table_info=10,
+    )
     return db
 
 

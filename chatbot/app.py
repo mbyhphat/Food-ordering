@@ -33,7 +33,10 @@ def chat():
 
     # 1) Guard check
     guard_resp = guard_agent.get_response(messages)
-    if guard_resp["memory"]["guard_decision"] == "not allowed":
+    if (
+        guard_resp["memory"]["guard_decision"] == "not allowed"
+        or guard_resp["memory"]["guard_decision"] == "greeting"
+    ):
         return jsonify(guard_resp)
 
     # 2) Phân loại agent kế tiếp

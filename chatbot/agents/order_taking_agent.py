@@ -12,7 +12,7 @@ class OrderTakingAgent:
         db = get_db()
         food_list = db.run("SELECT name, price, quantity FROM food_items;")
         system_prompt = f"""
-            You are a customer support Bot for a restaurant called "Merry's way".
+            You are a customer support Bot for a restaurant called "MaMa's Food".
 
             Here is the menu for this restaurant. The meaning of 3 columns are: food name, food pricce, and the stock.
 

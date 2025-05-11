@@ -4,7 +4,7 @@ from .utils import get_chatbot_response, get_agent
 
 
 class DetailsAgent:
-    def __init__(self, temperature=0):
+    def __init__(self, temperature=0.2):
         self.temperature = temperature
 
     def get_response(self, messages):
@@ -23,8 +23,10 @@ class DetailsAgent:
 
                         Important: You are only allowed to perform SELECT queries to retrieve data.  
                         You must not perform any actions that modify the database, such as INSERT, UPDATE, DELETE, DROP, or ALTER.
-
-                        Please always provide clear and concise answers in Vietnamese that are easy for users to understand."""
+ 
+                        If your answer has multiple points (such as several items), write each point on a separate line.
+                        When the user asks for a list of items (e.g., menu items or categories lists), respond with a limited number of results from your query, and present them naturally — not with phrasing such as 'Items in the database include:' or 'Here is the list from the database', which mentioned about the database. 
+                        Instead, speak as if you're introducing the items directly to the user."""
         input_messages = messages[-3:]
         agent = get_agent(system_prompt)
         chatbot_output = get_chatbot_response(input_messages, self.temperature, agent)

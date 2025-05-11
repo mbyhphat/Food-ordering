@@ -54,6 +54,7 @@ const NavBar = () => {
                     }}
                     className={menu === "Home" ? "active" : ""}
                 >
+                    {" "}
                     Home{" "}
                 </li>
                 <li
@@ -69,13 +70,20 @@ const NavBar = () => {
                     onClick={() => setMenu("Mobile-app")}
                     className={menu === "Mobile-app" ? "active" : ""}
                 >
+                    {" "}
                     Mobile-app{" "}
                 </li>
                 <li
-                    onClick={() => setMenu("Contact us")}
+                    onClick={() => {
+                        setMenu("Contact us");
+                        const footer = document.getElementById("footer");
+                        if (footer) {
+                            footer.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }}
                     className={menu === "Contact us" ? "active" : ""}
                 >
-                    Contact us{" "}
+                    Contact us
                 </li>
             </ul>
             <div className="navbar-right">

@@ -20,7 +20,7 @@ const ExploreMenu = ({ category, setCategory }) => {
     }, []);
 
     return (
-        <div className="explore-menu">
+        <div className="explore-menu" id="explore-menu">
             <h1>Thực đơn</h1>
             <div className="menu-category-list">
                 {categories.map((item, index) => {

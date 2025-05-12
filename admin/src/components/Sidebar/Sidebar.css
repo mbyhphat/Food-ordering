@@ -32,11 +32,9 @@
 .sidebar-option .order {
   width: 35px;
 }
+
 .sidebar-option.active {
   background-color: #FFF3CD; /* Vàng nhạt đậm hơn */
   border-color: #FFB300; /* Vàng cam nổi bật */
-  box-shadow: 0 0 5px rgba(245, 158, 11, 0.5); /* Thêm bóng nhẹ */
-}
-.sidebar-option {
-  transition: background-color 0.3s, border-color 0.9s;
+  box-shadow: 0 0 5px rgba(245, 158, 11, 0.5);/* Thêm bóng nhẹ */
 }

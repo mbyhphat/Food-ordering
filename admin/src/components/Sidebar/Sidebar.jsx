@@ -6,15 +6,15 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-options">
-        <NavLink to='/add' className="sidebar-option ">
+        <NavLink to='/add' className="sidebar-option .active">
           <img src={assets.add_icon} alt="" />
           <p>Thêm thư mục </p>
         </NavLink>
-        <NavLink to='/list' className="sidebar-option ">
+        <NavLink to='/list' className="sidebar-option .active">
           <img src={assets.list_item} alt="" />
           <p>Danh sách thư mục  </p>
         </NavLink >
-        <NavLink to='/orders' className="sidebar-option ">
+        <NavLink to='/orders' className="sidebar-option .active">
           <img className='order' src={assets.order_icon} alt="" />
           <p>Đặt hàng  </p>
         </NavLink>

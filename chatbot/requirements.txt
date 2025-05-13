@@ -10,3 +10,4 @@ langchain_community
 langchain_openai
 flask
 flask_cors
+langchain-google-genai

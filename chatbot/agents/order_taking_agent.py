@@ -1,6 +1,7 @@
 import json
 from copy import deepcopy
 from .utils import get_chatbot_response, get_db
+import re
 
 
 class OrderTakingAgent:
@@ -75,6 +76,7 @@ class OrderTakingAgent:
         return output
 
     def postprocess(self, output):
+        output = re.sub(r"```json|```", "", output).strip()
         output = json.loads(output)
 
         if type(output["order"]) == str:

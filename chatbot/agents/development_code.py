@@ -23,12 +23,14 @@ def main():
         messages.append({"role": "user", "content": prompt})
         # Get GuardAgent's response
         guard_agent_response = guard_agent.get_response(messages)
+        print(f"Guard agent: {guard_agent_response}")
 
         if guard_agent_response["memory"]["guard_decision"] == "not allowed":
             messages.append(guard_agent_response)
             continue
 
         classification_agent_response = classification_agent.get_response(messages)
+        print(f"Classification agent: {classification_agent_response}")
         chosen_agent = classification_agent_response["memory"][
             "classification_decision"
         ]

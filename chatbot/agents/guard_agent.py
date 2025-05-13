@@ -1,6 +1,7 @@
 import json
 from copy import deepcopy
 from .utils import get_chatbot_response
+import re
 
 
 class GuardAgent:
@@ -31,11 +32,13 @@ class GuardAgent:
 
         input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
         chatbot_output = get_chatbot_response(input_messages, self.temperature)
+        print(chatbot_output)
         output = self.postprocess(chatbot_output)
 
         return output
 
     def postprocess(self, output):
+        output = re.sub(r"```json|```", "", output).strip()
         output = json.loads(output)
 
         dict_output = {

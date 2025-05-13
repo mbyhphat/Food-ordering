@@ -1,6 +1,7 @@
 import json
 from copy import deepcopy
 from .utils import get_chatbot_response
+import re
 
 
 class ClassificationAgent:
@@ -28,6 +29,7 @@ class ClassificationAgent:
         return output
 
     def postprocess(self, output):
+        output = re.sub(r"```json|```", "", output).strip()
         output = json.loads(output)
 
         return {

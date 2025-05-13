@@ -4,6 +4,7 @@
     align-items: center;
     padding: 8px 4%; 
     background: #E8E9EB;
+   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .navbar .logo {

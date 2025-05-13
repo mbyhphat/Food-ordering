@@ -18,6 +18,14 @@ const Sidebar = () => {
           <img className='order' src={assets.order_icon} alt="" />
           <p>Đặt hàng  </p>
         </NavLink>
+        <NavLink to='/voucher' className="sidebar-option ">
+          <img className='order' src={assets.voucher} alt="" />
+          <p>Mã giảm giá  </p>
+        </NavLink>
+        <NavLink to='/analytis' className="sidebar-option ">
+          <img className='order' src={assets.thongke} alt="" />
+          <p>Thống kê biểu đồ   </p>
+        </NavLink>
       </div>
     </div>
   )

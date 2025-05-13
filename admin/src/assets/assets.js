@@ -6,6 +6,8 @@ import parcels_icon from './parcels_icon.png'
 import upload from './upload.png'
 import list_item from './list-items.png'
 import Phat from './Phat.jpg'
+import voucher from './voucher.png'
+import thongke from './analytics.png'
 
 
 export const assets = {
@@ -17,4 +19,6 @@ export const assets = {
     upload,
     list_item,
     Phat,
+    voucher,
+    thongke,
 }

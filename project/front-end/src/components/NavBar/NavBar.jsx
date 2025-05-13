@@ -25,6 +25,10 @@ const NavBar = () => {
             });
         });
     };
+     // Function to scroll to top
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     // Đóng menu nếu click ra ngoài
     useEffect(() => {
@@ -43,7 +47,7 @@ const NavBar = () => {
 
     return (
         <div className="navbar" id="navbar">
-            <Link to="/">
+            <Link to="/" onClick={scrollToTop}>
                 <img src={assets.logo} alt="Logo" className="logo" />
             </Link>
             <ul className="navbar-menu">
@@ -51,27 +55,30 @@ const NavBar = () => {
                     onClick={() => {
                         setMenu("Home");
                         navigate("/");
+                        scrollToTop();
                     }}
                     className={menu === "Home" ? "active" : ""}
                 >
-                    {/* {" "} */}
-                    Home{" "}
+                    Home
                 </li>
                 <li
                     onClick={() => {
                         setMenu("Menu");
                         navigate("/menu");
+                        scrollToTop();
                     }}
                     className={menu === "Menu" ? "active" : ""}
                 >
-                    Menu{" "}
+                    Menu
                 </li>
                 <li
-                    onClick={() => setMenu("Mobile-app")}
+                    onClick={() => {
+                        setMenu("Mobile-app");
+                        scrollToTop();
+                    }}
                     className={menu === "Mobile-app" ? "active" : ""}
                 >
-                    {" "}
-                    Mobile-app{" "}
+                    Mobile-app
                 </li>
                 <li
                     onClick={() => {
@@ -87,11 +94,10 @@ const NavBar = () => {
                 </li>
             </ul>
             <div className="navbar-right">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i className="fa-solid fa-magnifying-glass"></i>
                 <div className="navbar-search-icon">
                     <Link to={"/cart"}>
-                        {" "}
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
                     <div
                         className={getTotalCartAmount() === 0 ? "" : "dot"}

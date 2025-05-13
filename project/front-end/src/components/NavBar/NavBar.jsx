@@ -42,7 +42,7 @@ const NavBar = () => {
     }, []);
 
     return (
-        <div className="navbar">
+        <div className="navbar" id="navbar">
             <Link to="/">
                 <img src={assets.logo} alt="Logo" className="logo" />
             </Link>
@@ -54,7 +54,7 @@ const NavBar = () => {
                     }}
                     className={menu === "Home" ? "active" : ""}
                 >
-                    {" "}
+                    {/* {" "} */}
                     Home{" "}
                 </li>
                 <li

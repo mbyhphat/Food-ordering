@@ -28,7 +28,8 @@ const Login = () => {
                 setToken(data.token);
                 setSuccessMessage("Đăng nhập thành công.");
                 setTimeout(() => {
-                    navigate("/");
+                    if (data.role == 0) navigate("/");
+                    else window.open("http://localhost:5173", "_self");
                 }, 1500);
             })
             .catch((err) => {

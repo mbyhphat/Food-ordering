@@ -39,7 +39,7 @@ const PlaceOrder = () => {
               <b>{getTotalCartAmount()===0?0:getTotalCartAmount()+20000}</b>
             </div>
           </div>
-          <button >Thanh toán </button>
+          <button >Thanh toán VNPAY </button>
         </div>
       </div>
     </form>

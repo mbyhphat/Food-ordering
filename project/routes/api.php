@@ -13,3 +13,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/food', [FoodController::class, 'index']);
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+// Cổng thanh toán VNPAY
+

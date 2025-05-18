@@ -1,10 +1,11 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const [user, _setUser] = useState(() => {
-        const storedUser = localStorage.getItem("USER");
+        const storedUser = localStorage.getItem("USER_INFO");
+        console.log(localStorage);
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
@@ -15,9 +16,10 @@ export const AppProvider = ({ children }) => {
     const setUser = (user) => {
         _setUser(user);
         if (user) {
-            localStorage.setItem("USER", JSON.stringify(user));
+            localStorage.setItem("USER_INFO", JSON.stringify(user));
+            console.log(localStorage);
         } else {
-            localStorage.removeItem("USER");
+            localStorage.removeItem("USER_INFO");
         }
     };
 

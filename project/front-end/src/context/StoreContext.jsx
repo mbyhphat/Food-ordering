@@ -17,6 +17,7 @@ const StoreContextProvider = (props) => {
         try {
             setLoading(true);
             const { data } = await axiosClient.get("/food");
+            await new Promise((res) => setTimeout(res, 1000)); // Delay để thấy loading
             setFoodList(data.data);
         } catch (err) {
             const response = err.response;
@@ -89,6 +90,16 @@ const StoreContextProvider = (props) => {
         setCartItems((prev) => ({ ...prev, [itemId]: newQuantity }));
     };
 
+    const getTotalCart = () => {
+        let total = 0;
+        for (const item in cartItems) {
+            if (cartItems[item] > 0) {
+                total += cartItems[item];
+            }
+        }
+        return total;
+    };
+
     const contextValue = {
         food_list,
         cartItems,
@@ -98,6 +109,7 @@ const StoreContextProvider = (props) => {
         handleQuantityChange,
         getTotalCartAmount,
         loading,
+        getTotalCart, // thêm dòng này để export hàm ra context
     };
 
     return (

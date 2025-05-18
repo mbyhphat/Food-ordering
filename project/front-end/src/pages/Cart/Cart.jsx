@@ -21,7 +21,7 @@ const Cart = () => {
                 </div>
                 <br />
                 <hr />
-                {food_list.map((item, index) => {
+                {food_list.map((item) => {
                     if (cartItems[item.item_id] > 0) {
                         return (
                             <div>

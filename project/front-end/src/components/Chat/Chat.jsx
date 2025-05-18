@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import axios from "axios";
+import { StoreContext } from "../../context/StoreContext";
 
 const Chat = () => {
     const [messages, setMessages] = useState([]); // history
     const [input, setInput] = useState(""); // giá trị ô input
     const [loading, setLoading] = useState(false); // loading indicator
     const bottomRef = useRef(null);
+    const { handleQuantityChange } = useContext(StoreContext);
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,6 +45,16 @@ const Chat = () => {
                 <ul className="list-unstyled message-list">
                     {messages.map((message, idx) => {
                         const isUser = message?.role === "user";
+                        if (
+                            !isUser &&
+                            message.memory.agent === "order_taking_agent"
+                        ) {
+                            handleQuantityChange(
+                                message.memory.order.id,
+                                message.memory.order.quantity,
+                                message.memory.order.initial_stock
+                            );
+                        }
                         return (
                             <li
                                 key={idx}

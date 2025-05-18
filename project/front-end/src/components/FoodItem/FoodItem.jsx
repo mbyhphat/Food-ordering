@@ -1,20 +1,35 @@
 import React, { useContext } from "react";
 import "./FoodItem.css";
 import { StoreContext } from "../../context/StoreContext";
+import { useAppContext } from "../../context/ContextProvider";
+import { toast } from "react-toastify";
 
-const FoodItem = ({ id, name, price, description, image }) => {
+const FoodItem = ({ id, name, price, description, image, quantity }) => {
     const { cartItems, addToCart, removeFromCart, handleQuantityChange } =
         useContext(StoreContext);
+    const { user, token } = useAppContext();
 
     return (
         <div>
-            <div className="food-item">
+            <div className="food-item" key="id">
                 <div className="food-item-img-container">
                     <img src={image} alt="" className="food-item-img" />
                     {!cartItems[id] ? (
                         <i
                             class="fa-solid fa-plus first-add"
-                            onClick={() => addToCart(id)}
+                            onClick={() => {
+                                if (user.role === 0 || token) {
+                                    addToCart(id, quantity);
+                                } else {
+                                    toast.error(
+                                        "Bạn phải đăng nhập để đặt hàng!",
+                                        {
+                                            autoClose: 1000,
+                                            position: "top-center",
+                                        }
+                                    );
+                                }
+                            }}
                         ></i>
                     ) : (
                         <div className="food-item-counter">
@@ -27,13 +42,17 @@ const FoodItem = ({ id, name, price, description, image }) => {
                                 value={cartItems[id] || 0}
                                 min="0"
                                 onChange={(e) =>
-                                    handleQuantityChange(id, e.target.value)
+                                    handleQuantityChange(
+                                        id,
+                                        e.target.value,
+                                        quantity
+                                    )
                                 }
                                 className="cart-quantity-input"
                             />
                             <i
                                 class="fa-solid fa-circle-plus next-add"
-                                onClick={() => addToCart(id)}
+                                onClick={() => addToCart(id, quantity)}
                             ></i>
                         </div>
                     )}

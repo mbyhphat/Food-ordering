@@ -11,11 +11,11 @@ class OrderTakingAgent:
     def get_response(self, messages):
         messages = deepcopy(messages)
         db = get_db()
-        food_list = db.run("SELECT name, price, quantity FROM food_items;")
+        food_list = db.run("SELECT item_id, name, price, quantity FROM food_items;")
         system_prompt = f"""
             You are a customer support Bot for a restaurant called "MaMa's Food".
 
-            Here is the menu for this restaurant. The meaning of 3 columns are: food name, food pricce, and the stock.
+            Here is the menu for this restaurant. The meaning of 4 columns are: id, food name, food price, and the stock.
 
             {food_list}
 
@@ -46,7 +46,7 @@ class OrderTakingAgent:
             {{
             "chain of thought": Write down your critical thinking about what is the maximum task number the user is on write now. Then write down your critical thinking about the user input and it's relation to the coffee shop process. Then write down your thinking about how you should respond in the response parameter taking into consideration the Things to NOT DO section. and Focus on the things that you should not do. 
             "step number": Determine which task you are on based on the conversation.
-            "order": this is going to be a list of jsons like so. [{{"item":put the item name, "quanitity": put the number that the user wants from this item, "price":put the total price of the item }}]
+            "order": this is going to be a list of jsons like so. [{{"id": put the item's id, "item":put the item name, "quanitity": put the number that the user wants from this item, "price":put the total price of the item, "initial_stock": put the initial quantity of the items here }}]
             "response": write the a response to the user
             }}
         """
@@ -72,7 +72,6 @@ class OrderTakingAgent:
         input_messages = [{"role": "system", "content": system_prompt}] + messages
         chatbot_output = get_chatbot_response(input_messages)
         output = self.postprocess(chatbot_output)
-
         return output
 
     def postprocess(self, output):

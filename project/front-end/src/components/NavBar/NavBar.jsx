@@ -14,6 +14,7 @@ const NavBar = () => {
     const profileRef = useRef();
     const [profile, setProfile] = useState(false);
     const { token, setUser, setToken } = useAppContext();
+    const { getTotalCart } = useContext(StoreContext);
 
     const onLogout = (ev) => {
         ev.preventDefault();
@@ -25,7 +26,7 @@ const NavBar = () => {
             });
         });
     };
-     // Function to scroll to top
+    // Function to scroll to top
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -99,9 +100,9 @@ const NavBar = () => {
                     <Link to={"/cart"}>
                         <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
-                    <div
-                        className={getTotalCartAmount() === 0 ? "" : "dot"}
-                    ></div>
+                    <div className={getTotalCart() === 0 ? "" : "dot"}>
+                        {getTotalCart() > 0 && getTotalCart()}
+                    </div>
                 </div>
                 <div>
                     {token ? (

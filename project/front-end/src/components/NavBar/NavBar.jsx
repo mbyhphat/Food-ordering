@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 const NavBar = () => {
     const navigate = useNavigate();
     const [menu, setMenu] = useState("Menu");
-    const { getTotalCartAmount } = useContext(StoreContext);
     const profileRef = useRef();
     const [profile, setProfile] = useState(false);
     const { token, setUser, setToken } = useAppContext();
@@ -19,7 +18,7 @@ const NavBar = () => {
     const onLogout = (ev) => {
         ev.preventDefault();
         axiosClient.post("/logout").then(() => {
-            setUser({});
+            setUser(null);
             setToken(null);
             toast.info("Bạn đã đăng xuất khỏi ứng dụng!", {
                 autoClose: 1500,

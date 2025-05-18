@@ -25,7 +25,7 @@ const NavBar = () => {
             });
         });
     };
-     // Function to scroll to top
+    // Function to scroll to top
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };

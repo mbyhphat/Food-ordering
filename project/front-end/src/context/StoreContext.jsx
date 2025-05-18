@@ -1,11 +1,32 @@
-import { createContext, useState } from "react";
-import { food_list } from "../assets/assets";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import axiosClient from "../axios-client";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
+    const [food_list, setFoodList] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchFoodData();
+    }, []);
+
+    const fetchFoodData = async () => {
+        try {
+            setLoading(true);
+            const { data } = await axiosClient.get("/food");
+            setFoodList(data.data);
+        } catch (err) {
+            const response = err.response;
+            if (response && response.status === 422) {
+                console.error(response.data.message);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const addToCart = (itemId, maxQuantity) => {
         setCartItems((prev) => {
@@ -41,7 +62,7 @@ const StoreContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let intemInfo = food_list.find(
-                    (product) => product._id === item
+                    (product) => product.item_id === parseInt(item)
                 );
                 totalAmount += intemInfo.price * cartItems[item];
             }
@@ -76,6 +97,7 @@ const StoreContextProvider = (props) => {
         removeFromCart,
         handleQuantityChange,
         getTotalCartAmount,
+        loading,
     };
 
     return (

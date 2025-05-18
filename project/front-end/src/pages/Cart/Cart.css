@@ -50,12 +50,12 @@
 }
 .cart-total button{
     border: none;
-    
+    font-weight: 600;
     background-color: yellow;
     width: max(15vh,200px);
     border-radius: 4px;
     padding: 12px 0px;
-cursor: pointer;
+    cursor: pointer;
 }
 .cart-promocode{
     flex: 1;

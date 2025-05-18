@@ -100,7 +100,7 @@ const NavBar = () => {
                     <Link to={"/cart"}>
                         <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
-                    <div className={getTotalCart() === 0 ? "" : "dot"}>
+                    <div className={getTotalCart() === 0 ? "" : "dott"}>
                         {getTotalCart() > 0 && getTotalCart()}
                     </div>
                 </div>

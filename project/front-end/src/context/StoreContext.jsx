@@ -1,17 +1,57 @@
-import { createContext, useState } from "react";
-import { food_list } from "../assets/assets";
+import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import axiosClient from "../axios-client";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
+    const [food_list, setFoodList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const addToCart = (itemId) => {
-        if (!cartItems[itemId]) {
-            setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-        } else {
-            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    useEffect(() => {
+        fetchFoodData();
+    }, []);
+
+    const fetchFoodData = async () => {
+        try {
+            setLoading(true);
+            const { data } = await axiosClient.get("/food");
+            await new Promise((res) => setTimeout(res, 1000)); // Delay để thấy loading
+            setFoodList(data.data);
+        } catch (err) {
+            const response = err.response;
+            if (response && response.status === 422) {
+                console.error(response.data.message);
+            }
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const addToCart = (itemId, maxQuantity) => {
+        setCartItems((prev) => {
+            const newQuantity = (prev[itemId] || 0) + 1;
+
+            // Kiểm tra số lượng ngay tại đây
+            if (newQuantity > maxQuantity) {
+                toast.error(
+                    "Rất tiếc, cửa hàng không còn đủ số lượng món ăn mà bạn muốn đặt!",
+                    {
+                        autoClose: 1000,
+                        position: "top-center",
+                    }
+                );
+                // Trả về state cũ nếu vượt quá số lượng
+                return prev;
+            }
+
+            // Nếu ok thì cập nhật state mới
+            return {
+                ...prev,
+                [itemId]: newQuantity,
+            };
+        });
     };
 
     const removeFromCart = (itemId) => {
@@ -23,12 +63,31 @@ const StoreContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let intemInfo = food_list.find(
-                    (product) => product._id === item
+                    (product) => product.item_id === parseInt(item)
                 );
                 totalAmount += intemInfo.price * cartItems[item];
             }
         }
         return totalAmount;
+    };
+
+    const handleQuantityChange = (itemId, value, quantity) => {
+        setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
+        const newQuantity = parseInt(value, 10); // Convert input (string) to a number
+
+        if (isNaN(newQuantity) || newQuantity < 0) return; // Prevent invalid input (Nan when input="abc")
+        if (newQuantity > quantity) {
+            toast.error(
+                "Rất tiếc, cửa hàng không còn đủ số lượng món ăn mà bạn muốn đặt!",
+                {
+                    autoClose: 1000,
+                    position: "top-center",
+                }
+            );
+            return;
+        }
+
+        setCartItems((prev) => ({ ...prev, [itemId]: newQuantity }));
     };
 
     const getTotalCart = () => {
@@ -41,14 +100,6 @@ const StoreContextProvider = (props) => {
         return total;
     };
 
-    const handleQuantityChange = (itemId, value) => {
-        const newQuantity = parseInt(value, 10); // Convert input (string) to a number
-
-        if (isNaN(newQuantity) || newQuantity < 0) return; // Prevent invalid input (Nan when input="abc")
-
-        setCartItems((prev) => ({ ...prev, [itemId]: newQuantity }));
-    };
-
     const contextValue = {
         food_list,
         cartItems,
@@ -57,6 +108,7 @@ const StoreContextProvider = (props) => {
         removeFromCart,
         handleQuantityChange,
         getTotalCartAmount,
+        loading,
         getTotalCart, // thêm dòng này để export hàm ra context
     };
 

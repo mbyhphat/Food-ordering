@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import FoodItem from "../FoodItem/FoodItem";
 import "./FoodDisplay.css";
-import axiosClient from "../../axios-client";
-import { toast } from "react-toastify";
+import { StoreContext } from "../../context/StoreContext";
 
 const FoodDisplay = ({ category }) => {
-    const [food, setFood] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axiosClient
-            .get("/food")
-            .then(({ data }) => {
-                setFood(data.data);
-            })
-            .catch((err) => {
-                const response = err.response;
-                if (response && response.status === 422) {
-                    toast.error(response.data.message);
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+    const { food_list, loading } = useContext(StoreContext);
 
     return (
         <div className="food-display" id="food-display">
@@ -38,7 +19,7 @@ const FoodDisplay = ({ category }) => {
                 </section>
             ) : (
                 <div className="food-display-list">
-                    {food.map((item, index) => {
+                    {food_list.map((item, index) => {
                         if (
                             category.toLowerCase() === "all" ||
                             category === item.category_name
@@ -51,6 +32,7 @@ const FoodDisplay = ({ category }) => {
                                     price={item.price}
                                     description={item.description}
                                     image={item.image_url}
+                                    quantity={item.quantity}
                                 />
                             );
                     })}

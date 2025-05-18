@@ -10,7 +10,7 @@ GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
 
-def get_client(temperature=0.1, top_p=0.8, max_tokens=2000):
+def get_client(temperature=0, top_p=0.8, max_tokens=2000):
     llm = ChatGoogleGenerativeAI(
         model=os.getenv("MODEL_NAME"),
         temperature=temperature,

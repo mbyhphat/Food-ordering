@@ -32,7 +32,6 @@ class GuardAgent:
 
         input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
         chatbot_output = get_chatbot_response(input_messages, self.temperature)
-        print(chatbot_output)
         output = self.postprocess(chatbot_output)
 
         return output

@@ -1,1 +1,2 @@
 *.sqlite*
+migrations/2025_05_18_042845_create_sessions_table.php

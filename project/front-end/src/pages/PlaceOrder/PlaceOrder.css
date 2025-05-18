@@ -17,18 +17,26 @@
     margin-bottom: 50px;
 }
 
-.place-order-left input {
+.user-info p {
+    width: 150px;
+    margin: 0;
+}
+
+.user-name, .user-gmail, .user-address, .user-phone {
+    display: flex;
+    align-items: center;
     margin-bottom: 15px;
+}
+
+.place-order-left input {
+    flex: 1;
     width: 100%;
     padding: 10px;
     border: 1px solid #c5c5c5;
     border-radius: 4px;
     outline-color:yellow ;
 }
-.place-order-left .multi-fields{
-    display: flex;
-    gap: 10px;
-}
+
 .place-order-right{
     width: 100%;
     max-width: max(40%,500px);

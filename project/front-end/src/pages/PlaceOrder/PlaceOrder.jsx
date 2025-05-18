@@ -1,9 +1,11 @@
-import React, { use, useContext } from 'react'
-import "./PlaceOrder.css"
-import { StoreContext } from '../../context/StoreContext'
+import React, { useContext } from "react";
+import "./PlaceOrder.css";
+import { StoreContext } from "../../context/StoreContext";
+import { useAppContext } from "../../context/ContextProvider";
 
-    
 const PlaceOrder = () => {
+    const { getTotalCartAmount } = useContext(StoreContext);
+    const { user } = useAppContext();
 
     const {getTotalCartAmount} = useContext(StoreContext)
   return (
@@ -39,11 +41,11 @@ const PlaceOrder = () => {
               <b>{getTotalCartAmount()===0?0:getTotalCartAmount()+20000}</b>
             </div>
           </div>
-          <button >Thanh toán VNPAY </button>
+          <button >Thanh toán </button>
         </div>
       </div>
     </form>
   )
 }
 
-export default PlaceOrder
+export default PlaceOrder;

@@ -17,7 +17,7 @@ const StoreContextProvider = (props) => {
         try {
             setLoading(true);
             const { data } = await axiosClient.get("/food");
-            await new Promise((res) => setTimeout(res, 1000)); // Delay để thấy loading
+            await new Promise((res) => setTimeout(res, 1500)); // Delay để thấy loading
             setFoodList(data.data);
         } catch (err) {
             const response = err.response;

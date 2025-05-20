@@ -8,6 +8,12 @@ const Cart = () => {
         useContext(StoreContext);
     const navigate = useNavigate();
 
+    // Function to handle checkout navigation
+    const handleCheckout = () => {
+        navigate("/order");
+        window.scrollTo(0, 0); // Immediately scroll to top without smooth animation
+    };
+
     return (
         <div className="cart">
             <div className="cart-items">
@@ -72,7 +78,7 @@ const Cart = () => {
                             </b>
                         </div>
                     </div>
-                    <button onClick={() => navigate("/order")}>
+                    <button onClick={handleCheckout}>
                         Tiến hành thanh toán
                     </button>
                 </div>

@@ -8,6 +8,7 @@ import AddFood from "./pages/AddFood/AddFood";
 import ListFood from "./pages/ListFood/ListFood";
 import Analytics from "./pages/Analytics/Analytics";
 import Voucher from "./pages/Voucher/Voucher";
+import CategoryDetail from "./pages/CategoryDetail/CategoryDetail";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,16 @@ const router = createBrowserRouter([
           },
           {
             path: "list_category",
-            element: <List />,
+            children: [
+              {
+                index: true,
+                element: <List />,
+              },
+              {
+                path: ":id",
+                element: <CategoryDetail />,
+              },
+            ],
           },
           { path: "add_food", element: <AddFood /> },
           { path: "list_food", element: <ListFood /> },

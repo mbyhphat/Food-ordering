@@ -50,17 +50,9 @@ function Add() {
     formData.append("name", data.name);
     formData.append("image_url", data.image_url);
 
-    // Log what we're sending
-    console.log("Sending data:", {
-      name: data.name,
-      image: data.image_url.name,
-      imageType: data.image_url.type,
-      imageSize: data.image_url.size,
-    });
-
     // Gửi API nếu cần
     try {
-      const response = await axiosClient.post("/category", formData, {
+      await axiosClient.post("/category", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

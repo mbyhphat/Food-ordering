@@ -35,12 +35,31 @@
     height: 60px;
     object-fit: cover;
     border-radius: 6px;
+    cursor: pointer;
+}
+
+.category-name {
+    cursor: pointer;
 }
 
 .action-buttons {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+}
+
+.view-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+    background-color: #0069d9;
 }
 
 .delete-btn {

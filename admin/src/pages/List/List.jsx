@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./List.css";
 import axiosClient from "../../axios-client";
 import { toast } from "react-toastify";
@@ -6,6 +7,7 @@ import { toast } from "react-toastify";
 function List() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
@@ -37,17 +39,21 @@ function List() {
     }
   };
 
+  const handleViewDetails = (id) => {
+    navigate(`/list_category/${id}`);
+  };
+
   return (
     <div className="list add flex-col">
       <h2>Danh sách danh mục</h2>
 
       {loading ? (
-        <section class="dots-container">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
+        <section className="dots-container">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
         </section>
       ) : categories.length === 0 ? (
         <p>Không có danh mục nào</p>
@@ -65,9 +71,21 @@ function List() {
                 src={category.image_url}
                 className="category-image"
                 alt={category.name}
+                onClick={() => handleViewDetails(category.category_id)}
               />
-              <div>{category.name}</div>
+              <div
+                className="category-name"
+                onClick={() => handleViewDetails(category.category_id)}
+              >
+                {category.name}
+              </div>
               <div className="action-buttons">
+                <button
+                  onClick={() => handleViewDetails(category.category_id)}
+                  className="view-btn"
+                >
+                  Xem
+                </button>
                 <button
                   onClick={() => handleDelete(category.category_id)}
                   className="delete-btn"

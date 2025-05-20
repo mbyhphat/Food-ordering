@@ -1,10 +1,10 @@
 import React from 'react'
 import './voucher.css'
 
-function voucher() {
+function Voucher() {
   return (
     <div>voucher aafafasf </div>
   )
 }
 
-export default voucher
+export default Voucher;

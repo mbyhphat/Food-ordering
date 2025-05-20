@@ -1,75 +1,159 @@
-import React, { useState } from 'react'
-import './Add.css'
-import { assets } from '../../assets/assets'
-import { useEffect } from 'react';
+import React, { useState } from "react";
+import "./Add.css";
+import { assets } from "../../assets/assets";
+import { toast } from "react-toastify";
+import axiosClient from "../../axios-client";
+
 function Add() {
-    const [image, setImage] = useState(false);
-    const [data, setData] = useState({
-        name: "",
-        description: "",
-        price: "",
-        category: "Khai vị ",
-        
-    })
-    const onChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData(data=>({...data,[name]:value}))
-    } 
-    const onSubmitHandler = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("name", data.name)
-        formData.append("description", data.description)
-        formData.append("price", Number(data.price))
-        formData.append("category", data.category)
-        formData.append("image", image)
-        
+  const [data, setData] = useState({
+    id: null,
+    name: "",
+    image_url: null,
+  });
+
+  const handleNameChange = (event) => {
+    setData((prev) => ({
+      ...prev,
+      name: event.target.value,
+    }));
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setData((prev) => ({
+      ...prev,
+      image_url: file,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!data.image_url) {
+      toast.error("Vui lòng chọn ảnh", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+      return;
     }
+
+    if (!data.name.trim()) {
+      toast.error("Vui lòng nhập tên danh mục", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+      return;
+    }
+
+    // Gửi dữ liệu bằng form-data nếu có file ảnh
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("image_url", data.image_url);
+
+    // Log what we're sending
+    console.log("Sending data:", {
+      name: data.name,
+      image: data.image_url.name,
+      imageType: data.image_url.type,
+      imageSize: data.image_url.size,
+    });
+
+    // Gửi API nếu cần
+    try {
+      const response = await axiosClient.post("/category", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Thêm danh mục thành công", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+
+      // Reset form
+      setData({
+        id: null,
+        name: "",
+        image_url: null,
+      });
+    } catch (err) {
+      console.error("Full error object:", err);
+      console.error("Error response data:", err.response?.data);
+      console.error("Error status:", err.response?.status);
+      console.error("Error headers:", err.response?.headers);
+
+      const response = err.response;
+      if (response && response.status === 422) {
+        // Handle validation errors
+        if (response.data.errors) {
+          // If errors is an object with field names as keys
+          Object.keys(response.data.errors).forEach((field) => {
+            toast.error(`${field}: ${response.data.errors[field].join(", ")}`, {
+              autoClose: 3000,
+              position: "top-center",
+            });
+          });
+        } else if (response.data.message) {
+          // If there's a general message
+          toast.error(response.data.message, {
+            autoClose: 3000,
+            position: "top-center",
+          });
+        } else {
+          toast.error("Lỗi xác thực dữ liệu", {
+            autoClose: 3000,
+            position: "top-center",
+          });
+        }
+      } else {
+        toast.error(`Có lỗi xảy ra: ${err.message}`, {
+          autoClose: 3000,
+          position: "top-center",
+        });
+      }
+    }
+  };
+
   return (
-      <div className="add">
-          <form className="flex-col" onSubmit={onChangeHandler}>
-                <div className="add-img-upload flex-col">
-                  <p>Tải ảnh lên </p>
-                  
-                <label htmlFor="image">
-                    <img src={image?URL.createObjectURL(image):assets.upload} alt="" />
-                  </label>
-                  <input onChange={(e)=>setImage(e.target.files[0])} type="file" id='image' hidden required/>
-            </div>
-            <div className="add-product-name flex-col">
-                <p>Tên sản phẩm </p>
-                <input onChange={onChangeHandler} value={data.name} type="text" name="name" id="" placeholder='Nhập vào đây '/>
-            </div>
-            <div className="add-product-description flex-col">
-                <p>
-                    Mô tả sản phẩm 
-                </p>
-                <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Viết nội dung ở đây ' required></textarea>
-            </div>
-            <div className="add-category-price">
-                <div className="add-category flex-col">
-                    <p>Danh mục sản phẩm </p>
-                    <select onChange={onChangeHandler}  name="category" >
-                            <option value="Khai vị">Khai vị</option>
-                            <option value="Thịt gà ">Thịt gà </option>
-                            <option value="Thịt bò-heo ">Thịt bò-heo </option>
-                            <option value="Hải sản ">Hải sản </option>
-                            <option value="Cơm-canh ">Cơm-canh </option>
-                            <option value="Lẩu ">Lẩu </option>
-                    </select>
-                </div>
-                <div className="add-price flex-col">
-                    <p>Giá sản phẩm </p>
-                    <input onChange={onChangeHandler}value={data.price} type="Number" name='price' placeholder='20000vnđ' />
-                </div>
-              </div>
-              <button type='submit' className='add-btn'>
-                  Thêm 
-              </button>
-          </form>
+    <div className="add">
+      <form className="flex-col" onSubmit={handleSubmit}>
+        <div className="add-img-upload flex-col">
+          <p>Tải ảnh lên</p>
+          <label htmlFor="image">
+            <img
+              src={
+                data.image_url
+                  ? URL.createObjectURL(data.image_url)
+                  : assets.upload
+              }
+              alt="Preview"
+            />
+          </label>
+          <input
+            onChange={handleImageChange}
+            type="file"
+            id="image"
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+        </div>
+        <div className="add-product-name flex-col">
+          <p>Tên danh mục</p>
+          <input
+            onChange={handleNameChange}
+            value={data.name}
+            type="text"
+            name="name"
+            placeholder="Nhập vào đây"
+          />
+        </div>
+        <button type="submit" className="add-btn">
+          Thêm
+        </button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default Add
+export default Add;

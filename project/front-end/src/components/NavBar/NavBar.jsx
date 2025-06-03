@@ -25,9 +25,17 @@ const NavBar = () => {
             });
         });
     };
+
     // Function to scroll to top
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    // Function to handle cart navigation
+    const handleCartClick = (e) => {
+        e.preventDefault();
+        navigate("/cart");
+        window.scrollTo(0, 0); // Immediately scroll to top without smooth animation
     };
 
     // Đóng menu nếu click ra ngoài
@@ -96,9 +104,9 @@ const NavBar = () => {
             <div className="navbar-right">
                 <i className="fa-solid fa-magnifying-glass"></i>
                 <div className="navbar-search-icon">
-                    <Link to={"/cart"}>
+                    <a href="/cart" onClick={handleCartClick}>
                         <i className="fa-solid fa-cart-shopping"></i>
-                    </Link>
+                    </a>
                     <div className={getTotalCart() === 0 ? "" : "dott"}>
                         {getTotalCart() > 0 && getTotalCart()}
                     </div>

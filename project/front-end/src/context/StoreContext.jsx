@@ -1,17 +1,42 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axiosClient from "../axios-client";
+import { useAppContext } from "./ContextProvider";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-    const [cartItems, setCartItems] = useState({});
     const [food_list, setFoodList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { user } = useAppContext();
+    const [cartItems, setCartItems] = useState(() => {
+        const storedUser = JSON.parse(localStorage.getItem("USER_INFO"));
+        if (storedUser?.id) {
+            const savedCart = localStorage.getItem(`ORDER_${storedUser.id}`);
+            console.log(localStorage);
+            return savedCart ? JSON.parse(savedCart) : {};
+        }
+        return {};
+    });
 
     useEffect(() => {
         fetchFoodData();
     }, []);
+
+    // Save order to localStorage whenever it changes
+    useEffect(() => {
+        if (user?.id) {
+            localStorage.setItem(`ORDER_${user.id}`, JSON.stringify(cartItems));
+            console.log(localStorage);
+            console.log(cartItems);
+        }
+    }, [cartItems, user]);
+
+    useEffect(() => {
+        if (!user?.id) {
+            setCartItems({});
+        }
+    }, [user]);
 
     const fetchFoodData = async () => {
         try {

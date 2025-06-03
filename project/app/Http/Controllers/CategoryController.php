@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use Illuminate\Support\Facades\Log;
+
 
 class CategoryController extends Controller
 {
@@ -22,7 +24,18 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        // Handle file upload
+        if ($request->hasFile('image_url')) {
+            $image = $request->file('image_url');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage'), $imageName);
+            $data['image_url'] = $imageName;
+        }
+
+        $category = Category::create($data);
+        return response(new CategoryResource($category), 201);
     }
 
     /**
@@ -30,7 +43,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
     /**
@@ -38,7 +51,27 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+
+        // Handle file upload
+        if ($request->hasFile('image_url')) {
+            // Delete old image if it exists
+            if ($category->image_url) {
+                $oldImagePath = public_path('storage/' . $category->image_url);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Store new image
+            $image = $request->file('image_url');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage'), $imageName);
+            $data['image_url'] = $imageName;
+        }
+
+        $category->update($data);
+        return new CategoryResource($category);
     }
 
     /**
@@ -46,6 +79,21 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        // Check if there are any related records before deleting
+
+        // Delete the image file from storage if it exists
+        if ($category->image_url) {
+            $imagePath = public_path('storage/' . $category->image_url);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            } else {
+                Log::warning('File does not exist: ' . $imagePath);
+            }
+        }
+
+        // Delete the category
+        $category->delete();
+
+        return response()->json(['message' => 'Danh mục đã được xóa thành công'], 200);
     }
 }

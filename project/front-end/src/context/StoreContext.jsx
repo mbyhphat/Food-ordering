@@ -96,19 +96,21 @@ const StoreContextProvider = (props) => {
         return totalAmount;
     };
 
-    const handleQuantityChange = (itemId, value, quantity) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
+    const handleQuantityChange = (itemId, value, quantity, chat = false) => {
         const newQuantity = parseInt(value, 10); // Convert input (string) to a number
 
         if (isNaN(newQuantity) || newQuantity < 0) return; // Prevent invalid input (Nan when input="abc")
         if (newQuantity > quantity) {
-            toast.error(
-                "Rất tiếc, cửa hàng không còn đủ số lượng món ăn mà bạn muốn đặt!",
-                {
-                    autoClose: 1000,
-                    position: "top-center",
-                }
-            );
+            if (!chat) {
+                toast.error(
+                    "Rất tiếc, cửa hàng không còn đủ số lượng món ăn mà bạn muốn đặt!",
+                    {
+                        autoClose: 1000,
+                        position: "top-center",
+                    }
+                );
+            }
+            // For chat, just ignore if not enough stock
             return;
         }
 

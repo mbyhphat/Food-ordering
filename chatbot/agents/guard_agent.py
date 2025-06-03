@@ -37,6 +37,7 @@ class GuardAgent:
         return output
 
     def postprocess(self, output):
+        print(output)
         output = re.sub(r"```json|```", "", output).strip()
         output = json.loads(output)
 

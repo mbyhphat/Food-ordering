@@ -26,7 +26,7 @@ class DetailsAgent:
  
                         If your answer has multiple points (such as several items), write each point on a separate line.
                         When the user asks for a list of items (e.g., menu items or categories lists), respond with a limited number of results from your query, and present them naturally — not with phrasing such as 'Items in the database include:' or 'Here is the list from the database', which mentioned about the database. 
-                        Instead, speak as if you're introducing the items directly to the user."""
+                        Instead, speak as if you're introducing the items directly to the user. Answer with the same language as the user."""
         input_messages = messages[-3:]
         agent = get_agent(system_prompt)
         chatbot_output = get_chatbot_response(input_messages, self.temperature, agent)

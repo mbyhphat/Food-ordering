@@ -25,3 +25,7 @@ Route::apiResource('category', CategoryController::class);
 // Route::middleware(['check.role:1'])->get('/test-role', function () {
 //     return 'Middleware chạy rồi!';
 // });
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+// Cổng thanh toán VNPAY
+
+

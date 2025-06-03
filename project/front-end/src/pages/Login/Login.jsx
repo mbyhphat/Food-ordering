@@ -36,6 +36,10 @@ const Login = () => {
                 const response = err.response;
                 if (response && response.status === 422) {
                     setErrors(response.data.message);
+                } else {
+                    setErrors(
+                        "Đã xảy ra lỗi hệ thống hoặc kết nối. Vui lòng thử lại sau."
+                    );
                 }
             });
     };

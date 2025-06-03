@@ -1,4 +1,4 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 import os
 from dotenv import load_dotenv
@@ -6,12 +6,12 @@ from langchain_community.agent_toolkits import create_sql_agent
 from langchain_community.utilities import SQLDatabase
 
 load_dotenv()
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 
 def get_client(temperature=0, top_p=0.8, max_tokens=2000):
-    llm = ChatGoogleGenerativeAI(
+    llm = ChatOpenAI(
         model=os.getenv("MODEL_NAME"),
         temperature=temperature,
         top_p=top_p,

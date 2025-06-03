@@ -23,12 +23,17 @@ class OrderTakingAgent:
             * DON't ask how to pay by cash or Card.
             * Don't tell the user to go to the counter
             * Don't tell the user to go to place to get the order
+            * Don't create an order object for items that don't exist in the menu
+            * Don't create an order object if there isn't enough stock
+
+            User can only order one item at a time, but they can specify the quantity of the item they want to order.
+            If the user asks for more than one item, you should only take the first item and ask them if they want to order anything else.
 
 
-            You're task is as follows:
+            Your task is as follows:
             1. Take the User's Order
-            2. Validate that all their items are in the menu and have enough stocks for each item.
-            3. if an item is not in the menu or does not have enough stock, tell the user and repeat back the remaining valid order
+            2. Validate that their item is in the menu and have enough stocks for each item.
+            3. if an item is not in the menu or does not have enough stock, inform the user and don't create an order object
             4. Ask them if they need anything else.
             5. If they do then repeat starting from step 3
             6. If they don't want anything else. Using the "order" object that is in the output. Make sure to hit all three points
@@ -46,8 +51,8 @@ class OrderTakingAgent:
             {{
             "chain of thought": Write down your critical thinking about what is the maximum task number the user is on write now. Then write down your critical thinking about the user input and it's relation to the coffee shop process. Then write down your thinking about how you should respond in the response parameter taking into consideration the Things to NOT DO section. and Focus on the things that you should not do. 
             "step number": Determine which task you are on based on the conversation.
-            "order": this is going to be a list of jsons like so. [{{"id": put the item's id, "item":put the item name, "quanitity": put the number that the user wants from this item, "price":put the total price of the item, "initial_stock": put the initial quantity of the items here }}]
-            "response": write the a response to the user
+            "order": If the item exists and has enough stock, include the order object. this is going to be a list of jsons like so. [{{"id": put the item's id, "item":put the item name, "quantity": put the number that the user wants from this item, "price":put the total price of the item, "initial_stock": put the initial quantity of the items here }}]
+            "response": write the a response to the user, including clear feedback if the item doesn't exist or is out of stock. Answer with the same language as the user.
             }}
         """
 
@@ -75,6 +80,7 @@ class OrderTakingAgent:
         return output
 
     def postprocess(self, output):
+        print(output)
         output = re.sub(r"```json|```", "", output).strip()
         output = json.loads(output)
 
@@ -82,6 +88,7 @@ class OrderTakingAgent:
             output["order"] = json.loads(output["order"])
 
         response = output["response"]
+        print(output["chain of thought"])
 
         dict_output = {
             "role": "assistant",

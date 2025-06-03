@@ -14,6 +14,21 @@ const Chat = () => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
+    useEffect(() => {
+        if (!messages.length) return;
+        const lastMsg = messages[messages.length - 1];
+        const isUser = lastMsg?.role === "user";
+        if (!isUser && lastMsg.memory?.agent === "order_taking_agent") {
+            // const order = lastMsg.memory.order[lastMsg.memory.order.length - 1];
+            const order = lastMsg.memory.order[0];
+            const orderId = parseInt(order.id);
+            const quantity = parseInt(order.quantity);
+            const initialStock = parseInt(order.initial_stock);
+
+            handleQuantityChange(orderId, quantity, initialStock, true);
+        }
+    }, [messages, handleQuantityChange]);
+
     const sendMessage = async () => {
         if (!input.trim()) return;
         const userMsg = { role: "user", content: input.trim() };
@@ -45,16 +60,6 @@ const Chat = () => {
                 <ul className="list-unstyled message-list">
                     {messages.map((message, idx) => {
                         const isUser = message?.role === "user";
-                        if (
-                            !isUser &&
-                            message.memory.agent === "order_taking_agent"
-                        ) {
-                            handleQuantityChange(
-                                message.memory.order.id,
-                                message.memory.order.quantity,
-                                message.memory.order.initial_stock
-                            );
-                        }
                         return (
                             <li
                                 key={idx}

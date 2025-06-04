@@ -8,6 +8,10 @@ import Register from "./pages/Register/Register";
 import RootLayout from "./pages/RootLayout/RootLayout";
 import Category from "./pages/Category/Category";
 import Chat from "./components/CustomerSupport/CustomerSupport";
+import {
+    ProtectedRoute,
+    RoleBasedRoute,
+} from "./components/ProtectedRoute/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -29,11 +33,36 @@ const router = createBrowserRouter([
                     },
                 ],
             },
-            { path: "order", element: <PlaceOrder /> },
-            { path: "cart", element: <Cart /> },
+            {
+                path: "order",
+                element: (
+                    <ProtectedRoute>
+                        <RoleBasedRoute>
+                            <PlaceOrder />
+                        </RoleBasedRoute>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "cart",
+                element: (
+                    <ProtectedRoute>
+                        <RoleBasedRoute>
+                            <Cart />
+                        </RoleBasedRoute>
+                    </ProtectedRoute>
+                ),
+            },
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
-            { path: "chat", element: <Chat /> },
+            {
+                path: "chat",
+                element: (
+                    <RoleBasedRoute>
+                        <Chat />
+                    </RoleBasedRoute>
+                ),
+            },
         ],
     },
 ]);

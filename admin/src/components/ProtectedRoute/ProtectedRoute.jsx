@@ -15,12 +15,25 @@ export const AdminProtectedRoute = ({ children }) => {
         setIsAdmin(false);
         setLoading(false);
         return;
-      }
-
-      try {
-        // Check if the logged-in user is an admin (role is not 0)
-        const response = await axiosClient.get("/user");
-        setIsAdmin(response.data?.role !== 0);
+      }      try {
+        // Use the status endpoint to check user permissions
+        const response = await axiosClient.get("/user-status");
+        const { authenticated, isAdmin, onCorrectPortal, redirectUrl } = response.data;
+        
+        if (authenticated && isAdmin && onCorrectPortal) {
+          setIsAdmin(true);
+        } else if (redirectUrl) {
+          toast.info("Đang chuyển hướng...", {
+            position: "top-center",
+            autoClose: 2000,
+          });
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 2000);
+          setIsAdmin(false);
+        } else {
+          setIsAdmin(false);
+        }
         setLoading(false);
       } catch (error) {
         console.error("Authentication error:", error);
@@ -40,23 +53,30 @@ export const AdminProtectedRoute = ({ children }) => {
       </div>
     );
   }
-
   // Check if user is admin and if they're on the correct host
   if (!isAdmin) {
-    // Show an unauthorized access message
+    // If not logged in at all, redirect to user login page
+    if (!token) {
+      toast.warn("Vui lòng đăng nhập để truy cập trang quản trị.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      
+      // Check user status with the backend before redirecting
+      axiosClient.get('/user-status')
+        .catch(() => {
+          window.location.href = "http://localhost:3000/login";
+        });
+      return null;
+    }// If logged in but not admin, show unauthorized message
     toast.error("Bạn không có quyền truy cập trang quản trị.", {
       position: "top-center",
       autoClose: 3000,
     });
 
-    // Add a slight delay before redirecting
-    setTimeout(() => {
-      window.location.href = "http://localhost:3000";
-    }, 2000);
-
     return (
       <div className="redirecting">
-        Đang chuyển hướng đến trang người dùng...
+        Không có quyền truy cập. Vui lòng đăng nhập với tài khoản admin.
       </div>
     );
   }

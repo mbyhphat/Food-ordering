@@ -9,16 +9,11 @@ import ListFood from "./pages/ListFood/ListFood";
 import Analytics from "./pages/Analytics/Analytics";
 import Voucher from "./pages/Voucher/Voucher";
 import CategoryDetail from "./pages/CategoryDetail/CategoryDetail";
-import { AdminProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <AdminProtectedRoute>
-        <Navbar />
-      </AdminProtectedRoute>
-    ),
+    element: <Navbar />,
     children: [
       {
         path: "",

@@ -18,16 +18,9 @@ axiosClient.interceptors.response.use(
         const { response } = error;
         if (response.status === 401) {
             localStorage.removeItem("ACCESS_TOKEN");
-            localStorage.removeItem("USER_INFO");
-            window.location.href = "/login";
+            // window.location.reload();
         } else if (response.status === 404) {
             //Show not found
-        } else if (response.status === 403) {
-            // Forbidden - role-based access denied
-            const currentHost = window.location.host;
-            if (currentHost === "localhost:5173") {
-                window.location.href = "http://localhost:3000";
-            }
         }
 
         throw error;

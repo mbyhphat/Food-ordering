@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../context/ContextProvider";
+import axiosClient from "../../axios-client";
 import { toast } from "react-toastify";
 import "./ProtectedRoute.css";
 
@@ -22,44 +23,53 @@ export const ProtectedRoute = ({ children }) => {
 };
 
 export const RoleBasedRoute = ({ children }) => {
-    const { user } = useAppContext();
-    const currentHost = window.location.host;
-
-    // Check if user is admin (role is not 0)
-    const isAdmin = user && user.role !== 0;
-
-    // Admin can only access admin site (localhost:5173)
-    if (isAdmin && currentHost === "localhost:3000") {
-        // Show message before redirect
-        toast.info("Chuyển hướng đến trang quản trị...", {
-            position: "top-center",
-            autoClose: 2000,
-        });
-
-        // Add a slight delay before redirecting
-        setTimeout(() => {
-            window.location.href = "http://localhost:5173";
-        }, 2000);
-
-        return <div className="loading-redirect">Đang chuyển hướng...</div>;
+    const { token } = useAppContext();
+    const [loading, setLoading] = useState(true);
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    
+    useEffect(() => {        const checkUserAccess = async () => {
+            try {
+                // Use the status endpoint to check user permissions
+                const response = await axiosClient.get("/user-status");
+                const { authenticated, isAdmin, onCorrectPortal, redirectUrl } = response.data;
+                
+                if (authenticated && !isAdmin && onCorrectPortal) {
+                    setIsAuthorized(true);
+                } else if (redirectUrl) {
+                    toast.info("Đang chuyển hướng...", {
+                        position: "top-center",
+                        autoClose: 2000,
+                    });
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 2000);
+                    setIsAuthorized(false);
+                } else {
+                    setIsAuthorized(false);
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error("Authorization error:", error);
+                setIsAuthorized(false);
+                setLoading(false);
+            }
+        };
+        
+        if (token) {
+            checkUserAccess();
+        } else {
+            setLoading(false);
+            setIsAuthorized(false);
+        }
+    }, [token]);
+    
+    if (loading) {
+        return <div className="loading-redirect">Đang kiểm tra quyền truy cập...</div>;
+    }    if (!isAuthorized) {
+        // The axios interceptor will handle redirects based on server response
+        return <div className="loading-redirect">Không có quyền truy cập...</div>;
     }
-
-    // Regular users can only access user site (localhost:3000)
-    if (!isAdmin && currentHost === "localhost:5173") {
-        // Show message before redirect
-        toast.info("Chuyển hướng đến trang người dùng...", {
-            position: "top-center",
-            autoClose: 2000,
-        });
-
-        // Add a slight delay before redirecting
-        setTimeout(() => {
-            window.location.href = "http://localhost:3000";
-        }, 2000);
-
-        return <div className="loading-redirect">Đang chuyển hướng...</div>;
-    }
-
+    
     return children;
 };
 

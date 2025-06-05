@@ -18,7 +18,7 @@ const FoodItem = ({ id, name, price, description, image, quantity }) => {
                         <i
                             class="fa-solid fa-plus first-add"
                             onClick={() => {
-                                if (token && user.role === 0) {
+                                if (user.role === 0 || token) {
                                     addToCart(id, quantity);
                                 } else {
                                     toast.error(

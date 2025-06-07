@@ -83,6 +83,12 @@ const StoreContextProvider = (props) => {
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
     };
 
+    const clearCart = () => {
+        setCartItems({});
+        // Xóa cart khỏi localStorage
+        localStorage.removeItem("cartItems");
+    };
+
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
@@ -137,6 +143,7 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         loading,
         getTotalCart, // thêm dòng này để export hàm ra context
+        clearCart,
     };
 
     return (

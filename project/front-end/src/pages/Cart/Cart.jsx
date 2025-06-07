@@ -83,7 +83,7 @@ const Cart = () => {
                         </div>
                         <hr />
                         <div className="cart-total-details">
-                            <p>Phí ship</p>
+                            <p>Phí Giao hàng</p>
                             <p>{getTotalCartAmount() === 0 ? 0 : 20000}</p>
                         </div>
                         <hr />

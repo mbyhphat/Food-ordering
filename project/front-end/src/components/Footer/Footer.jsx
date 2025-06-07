@@ -8,11 +8,7 @@ export const Footer = () => {
         <div className="footer-content-left">
           <h2>Mama's Kitchen</h2>
           <p>
-            Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc
-            trình bày và dàn trang phục vụ cho ngành công nghiệp in ấn. Lorem
-            Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in
-            ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản
-            với nhau để tạo thành một bản mẫu văn bản
+            Mama’s Kitchen là một thương hiệu ẩm thực gia đình nổi tiếng, chuyên phục vụ các món ăn truyền thống với hương vị đậm đà và nguyên liệu tươi ngon. Từ khi thành lập, Mama’s Kitchen đã trở thành lựa chọn quen thuộc của nhiều thực khách nhờ không gian ấm cúng và phong cách phục vụ tận tình. Thực đơn đa dạng của quán được xây dựng dựa trên công thức gia truyền, mang đến cho khách hàng trải nghiệm ẩm thực gần gũi như chính bữa cơm nhà, phù hợp cho những buổi sum họp gia đình hay gặp gỡ bạn bè.
           </p>
           <div className="footer-social-icon">
            <a href="https://www.facebook.com/" target="blank"> <i class="fa-brands fa-facebook"></i></a>
@@ -21,16 +17,16 @@ export const Footer = () => {
           </div>
         </div>
         <div className="footer-content-center">
-          <h2>COMPANY</h2>
+          <h2>Công ty </h2>
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Delivery</li>
-            <li>Privacy policy</li>
+            <li>Trang chủ </li>
+            <li>Về nhà hàng </li>
+            <li>Giao hàng </li>
+            <li>Chính sách bảo mật </li>
           </ul>
         </div>
         <div className="footer-content-right">
-          <h2>GET IN TOUCH</h2>
+          <h2>Thông tin liên lạc  </h2>
           <ul>
             <li>0123456789</li>
             <li>contact@mamakitchen.com</li>

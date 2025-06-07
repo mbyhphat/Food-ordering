@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
     const view_menu = useNavigate();
+
+    const handleViewMenu = () => {
+        view_menu("/menu");
+        window.scrollTo(0, 0); // Scroll to top
+    };
+
     return (
         <div className="header">
             <div className="header-two">
@@ -45,9 +51,7 @@ const Header = () => {
                         ăn của bạn và nâng tầm trải nghiệm ăn uống của bạn, từng
                         bữa ăn ngon một{" "}
                     </p>
-                    <button onClick={() => view_menu("/menu")}>
-                        View menu
-                    </button>
+                    <button onClick={handleViewMenu}>View menu</button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import { useAppContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
 
 const PlaceOrder = () => {
-    const { getTotalCartAmount } = useContext(StoreContext);
+    const { getTotalCartAmount, clearCart } = useContext(StoreContext);
     const { user } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -23,7 +23,8 @@ const PlaceOrder = () => {
             }
 
             // Kiểm tra số tiền
-            const totalAmount = getTotalCartAmount() + 20000;
+            const deliveryFee = getTotalCartAmount() === 0 ? 0 : 20000;
+            const totalAmount = getTotalCartAmount() + deliveryFee;
             if (totalAmount <= 0) {
                 setError("Giỏ hàng trống, vui lòng thêm sản phẩm!");
                 return;
@@ -40,6 +41,10 @@ const PlaceOrder = () => {
 
             // Kiểm tra response
             if (response.data && response.data.data) {
+                // Xóa giỏ hàng trước khi chuyển đến VNPAY
+                clearCart();
+
+                // Chuyển đến trang thanh toán VNPAY
                 window.location.href = response.data.data;
             } else {
                 throw new Error(
@@ -92,14 +97,14 @@ const PlaceOrder = () => {
                         <hr />
                         <div className="cart-total-details">
                             <p>Phí giao hàng</p>
-                            <p>{20000} vnđ</p>
+                            <p>{getTotalCartAmount() === 0 ? 0 : 20000} vnđ</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Tổng tiền </p>
                             <b>
                                 {getTotalCartAmount() === 0
-                                    ? 20000
+                                    ? 0
                                     : getTotalCartAmount() + 20000}{" "}
                                 vnđ
                             </b>

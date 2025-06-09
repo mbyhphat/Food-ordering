@@ -41,7 +41,7 @@ class FoodController extends Controller
      */
     public function show(Food $food)
     {
-        //
+        return new FoodResource($food);
     }
 
     /**
@@ -49,7 +49,25 @@ class FoodController extends Controller
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image_url')) {
+            // Delete old image if it exists
+            if ($food->image_url) {
+                $oldImagePath = public_path('storage/' . $food->image_url);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $image = $request->file('image_url');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage'), $imageName);
+            $data['image_url'] = $imageName;
+        }
+
+        $food->update($data);
+        return response(new FoodResource($food), 200);
     }
 
     /**
@@ -57,6 +75,15 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
-        //
+        // Delete image if it exists
+        if ($food->image_url) {
+            $imagePath = public_path('storage/' . $food->image_url);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        $food->delete();
+        return response()->json(['message' => 'Food item deleted successfully'], 204);
     }
 }

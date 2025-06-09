@@ -11,7 +11,7 @@ class PaymentController extends Controller
     $data = $request->all();
     $code_cart = rand(00, 9999);
     $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    $vnp_Returnurl = "http://localhost:8000/payment/vnpay-return";
+    $vnp_Returnurl = "http://localhost:8000/api/vnpay_return";
     $vnp_TmnCode = "L8EFGN9D"; //Mã website tại VNPAY 
     $vnp_HashSecret = "F0KX0WOS2RPRR6DI5H7F6Z8GB7CSD3RY"; //Chuỗi bí mật
 
@@ -82,4 +82,60 @@ class PaymentController extends Controller
     }
   }
 
+  public function vnpay_return(Request $request)
+  {
+    // Tạo một trang HTML tự động chuyển hướng và reset
+    $html = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Đang chuyển hướng...</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 50px;
+                background-color: #f8f9fa;
+            }
+            .success-message {
+                background-color: #d4edda;
+                color: #155724;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                border: 1px solid #c3e6cb;
+            }
+            .loading {
+                color: #6c757d;
+            }
+        </style>
+        <script>
+            // Hiển thị thông báo thành công trước
+            setTimeout(function() {
+                // Xóa tất cả localStorage và sessionStorage
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // Chuyển hướng về trang chính và reload
+                window.location.replace("http://localhost:3000/");
+            }, 5000); // Đợi 5 giây để người dùng đọc thông báo
+            
+            // Backup: nếu replace không hoạt động
+            setTimeout(function() {
+                window.location.href = "http://localhost:3000/";
+                window.location.reload(true);
+            }, 2500);
+        </script>
+    </head>
+    <body>
+        <div class="success-message">
+            <h2>✅ Đã thanh toán thành công!</h2>
+            <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+        </div>
+        <p class="loading">Đang chuyển về trang chính...</p>
+    </body>
+    </html>';
+    
+    return response($html)->header('Content-Type', 'text/html');
+  }
 }

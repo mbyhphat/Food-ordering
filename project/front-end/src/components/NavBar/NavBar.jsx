@@ -67,7 +67,7 @@ const NavBar = () => {
                     }}
                     className={menu === "Home" ? "active" : ""}
                 >
-                    Home
+                    Trang chủ
                 </li>
                 <li
                     onClick={() => {
@@ -77,16 +77,38 @@ const NavBar = () => {
                     }}
                     className={menu === "Menu" ? "active" : ""}
                 >
-                    Menu
+                    Thực đơn
                 </li>
                 <li
                     onClick={() => {
                         setMenu("Mobile-app");
-                        scrollToTop();
+                        // Đảm bảo về trang chủ trước nếu đang ở trang khác
+                        if (window.location.pathname !== "/") {
+                            navigate("/");
+                            // Đợi trang load xong rồi scroll
+                            setTimeout(() => {
+                                const commentSection =
+                                    document.getElementById("comment");
+                                if (commentSection) {
+                                    commentSection.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                                }
+                            }, 300);
+                        } else {
+                            // Nếu đã ở trang chủ thì scroll ngay
+                            const commentSection =
+                                document.getElementById("comment");
+                            if (commentSection) {
+                                commentSection.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            }
+                        }
                     }}
                     className={menu === "Mobile-app" ? "active" : ""}
                 >
-                    Mobile-app
+                    Nhận xét của khách hàng
                 </li>
                 <li
                     onClick={() => {
@@ -98,7 +120,7 @@ const NavBar = () => {
                     }}
                     className={menu === "Contact us" ? "active" : ""}
                 >
-                    Contact us
+                    Liên hệ
                 </li>
             </ul>
             <div className="navbar-right">

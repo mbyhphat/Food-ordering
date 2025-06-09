@@ -28,8 +28,8 @@ Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('category', CategoryController::class);
+Route::apiResource('food', FoodController::class);
 
 // Route::middleware(['check.role:1'])->get('/test-role', function () {
 //     return 'Middleware chạy rồi!';
 // });
-

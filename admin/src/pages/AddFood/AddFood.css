@@ -24,14 +24,17 @@
     padding: 10px;
 }
 
-.add-category-price {
-    display: flex;
-    gap: 30px;
-
+.add-category {
+    max-width: 280px;
 }
 
-.add-category-price select,
-.add-category-price input {
+.price-quantity {
+    display: flex;
+    gap: 30px;
+}
+
+.price-quantity select,
+.price-quantity input {
     max-width: 120px;
     padding: 10px;
 }

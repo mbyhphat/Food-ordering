@@ -23,7 +23,17 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image_url')) {
+            $image = $request->file('image_url');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage'), $imageName);
+            $data['image_url'] = $imageName;
+        }
+
+        $food = Food::create($data);
+        return response(new FoodResource($food), 201);
     }
 
     /**

@@ -118,7 +118,7 @@ class PaymentController extends Controller
                 
                 // Chuyển hướng về trang chính và reload
                 window.location.replace("http://localhost:3000/");
-            }, 1000); // Đợi 5 giây để người dùng đọc thông báo
+            }, 2000); // Đợi 5 giây để người dùng đọc thông báo
             
             // Backup: nếu replace không hoạt động
             setTimeout(function() {

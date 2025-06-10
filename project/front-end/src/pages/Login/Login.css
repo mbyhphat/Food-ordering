@@ -96,3 +96,21 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.role-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.role-buttons {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.role-buttons .login-button {
+    flex: 1;
+    margin: 0;
+}

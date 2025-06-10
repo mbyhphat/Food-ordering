@@ -4,29 +4,33 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 
 class CheckUserRole
 {
-    // public function handle(Request $request, Closure $next, $role)
-    // {
-    //     if (Auth::check() && Auth::user()->role == $role) {
-    //         return $next($request);
-    //     }
-
-    //     return response()->json(['message' => 'Unauthorized.'], Response::HTTP_FORBIDDEN);
-    // }
-    public function handle(Request $request, Closure $next, $role)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (!Auth::check()) {
-            return response()->json(['message' => 'User not authenticated.'], Response::HTTP_UNAUTHORIZED);
+        try {
+            $user = $request->user();
+            if (!$user || !in_array($user->role, $roles)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Không có quyền truy cập.',
+                ], 403);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Đã có lỗi bất thường xảy ra',
+            ], 401);
         }
-
-        if (Auth::user()->role != $role) {
-            return response()->json(['message' => 'User does not have the required role.'], Response::HTTP_FORBIDDEN);
-        }
-
         return $next($request);
     }
 }

@@ -7,6 +7,8 @@ import axiosClient from "../../axios-client";
 
 const Login = () => {
     const [showPass, setShowPass] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null);
     const emailRef = createRef();
     const passwordRef = createRef();
     const { setUser, setToken } = useAppContext();
@@ -21,6 +23,11 @@ const Login = () => {
             password: passwordRef.current.value,
         };
 
+        if (selectedRole === "admin") {
+            window.open("http://localhost:5173/login", "_self");
+            return;
+        }
+
         axiosClient
             .post("/login", payload)
             .then(({ data }) => {
@@ -28,8 +35,7 @@ const Login = () => {
                 setToken(data.token);
                 setSuccessMessage("Đăng nhập thành công.");
                 setTimeout(() => {
-                    if (data.user.role == 0) navigate("/");
-                    else window.open("http://localhost:5173", "_self");
+                    navigate("/");
                 }, 1500);
             })
             .catch((err) => {
@@ -44,62 +50,89 @@ const Login = () => {
             });
     };
 
+    const handleRoleSelect = (role) => {
+        setSelectedRole(role);
+        if (role === "admin") {
+            window.open("http://localhost:5173/login", "_self");
+        } else {
+            setShowLoginForm(true);
+        }
+    };
+
     return (
         <div className="login">
             <img src={assets.login} alt="" className="login-img" />
-            <form className="login-container" onSubmit={onSubmit} noValidate>
-                <h2>ĐĂNG NHẬP</h2>
-                {errors && (
-                    <div className="alert alert-danger" role="alert">
-                        <p>{errors}</p>
-                    </div>
-                )}
-                {successMessage && (
-                    <div className="alert alert-success" role="alert">
-                        <p>{successMessage}</p>
-                    </div>
-                )}
-                <div className="login-inputs">
-                    <input
-                        type="email"
-                        ref={emailRef}
-                        placeholder="Địa chỉ email"
-                        required
-                    />
-                    <div className="login-password">
-                        <input
-                            type={showPass ? "text" : "password"}
-                            ref={passwordRef}
-                            placeholder="Mật khẩu"
-                            required
-                        />
-                        {showPass ? (
-                            <i
-                                onClick={() => setShowPass(!showPass)}
-                                class="fa-solid fa-eye-slash"
-                            ></i>
-                        ) : (
-                            <i
-                                onClick={() => setShowPass(!showPass)}
-                                class="fa-solid fa-eye"
-                            ></i>
-                        )}
+            {!showLoginForm ? (
+                <div className="login-container role-selection">
+                    <h2>Chọn vai trò của bạn</h2>
+                    <div className="role-buttons">
+                        <button
+                            className="login-button"
+                            onClick={() => handleRoleSelect("user")}
+                        >
+                            Người dùng
+                        </button>
+                        <button
+                            className="login-button"
+                            onClick={() => handleRoleSelect("admin")}
+                        >
+                            Quản trị viên
+                        </button>
                     </div>
                 </div>
-                <p className="login-forget-password">Quên mật khẩu?</p>
-                <button className="login-button">Đăng nhập</button>
-                <p>Hoặc tiếp tục với</p>
-                <button className="login-google-button">
-                    <i class="fa-brands fa-google login-google-logo" />
-                    Đăng nhập bằng Google
-                </button>
-                <p>
-                    Bạn chưa có tài khoản?{" "}
-                    <span onClick={() => navigate("/register")}>
-                        Đăng ký ngay
-                    </span>
-                </p>
-            </form>
+            ) : (
+                <form
+                    className="login-container"
+                    onSubmit={onSubmit}
+                    noValidate
+                >
+                    <h2>ĐĂNG NHẬP</h2>
+                    {errors && (
+                        <div className="alert alert-danger" role="alert">
+                            <p>{errors}</p>
+                        </div>
+                    )}
+                    {successMessage && (
+                        <div className="alert alert-success" role="alert">
+                            <p>{successMessage}</p>
+                        </div>
+                    )}
+                    <div className="login-inputs">
+                        <input
+                            type="email"
+                            ref={emailRef}
+                            placeholder="Địa chỉ email"
+                            required
+                        />
+                        <div className="login-password">
+                            <input
+                                type={showPass ? "text" : "password"}
+                                ref={passwordRef}
+                                placeholder="Mật khẩu"
+                                required
+                            />
+                            {showPass ? (
+                                <i
+                                    onClick={() => setShowPass(!showPass)}
+                                    className="fa-solid fa-eye-slash"
+                                ></i>
+                            ) : (
+                                <i
+                                    onClick={() => setShowPass(!showPass)}
+                                    className="fa-solid fa-eye"
+                                ></i>
+                            )}
+                        </div>
+                    </div>
+                    <button className="login-button">Đăng nhập</button>
+                    <p>
+                        Bạn chưa có tài khoản?{" "}
+                        <span onClick={() => navigate("/register")}>
+                            Đăng ký ngay
+                        </span>
+                    </p>
+                </form>
+            )}
         </div>
     );
 };

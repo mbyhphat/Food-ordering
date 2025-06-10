@@ -10,32 +10,32 @@ use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/food', [FoodController::class, 'index']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware(['auth:sanctum', 'check.role:0'])->group(function () {
     Route::get('/cart', [CartController::class, 'getCart']);
     Route::post('/cart', [CartController::class, 'updateCart']);
     Route::delete('/cart', [CartController::class, 'clearCart']);
     Route::post('/orders', [OrdersController::class, 'store']);
+    // Cổng thanh toán VNPAY
+    Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+    // Route xử lý callback từ VNPAY
+    Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
 });
 
 // Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
 
 // });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/category', [CategoryController::class, 'index']);
-Route::get('/food', [FoodController::class, 'index']);
-
-// Cổng thanh toán VNPAY
-Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
-// Route xử lý callback từ VNPAY
-Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
-
-Route::apiResource('users', UserController::class);
-Route::apiResource('category', CategoryController::class);
-Route::apiResource('food', FoodController::class);
-
-// Route::middleware(['check.role:1'])->get('/test-role', function () {
-//     return 'Middleware chạy rồi!';
-// });
+Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('food', FoodController::class);
+});

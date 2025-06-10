@@ -10,6 +10,7 @@ function Add() {
     name: "",
     image_url: null,
   });
+  console.log(localStorage);
 
   const handleNameChange = (event) => {
     setData((prev) => ({

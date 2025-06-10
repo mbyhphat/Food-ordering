@@ -10,6 +10,7 @@ import Analytics from "./pages/Analytics/Analytics";
 import Voucher from "./pages/Voucher/Voucher";
 import CategoryDetail from "./pages/CategoryDetail/CategoryDetail";
 import FoodDetail from "./pages/FoodDetail/FoodDetail";
+import Login from "./pages/Login/Login";
 
 const router = createBrowserRouter([
   {
@@ -51,5 +52,6 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "login", element: <Login /> },
 ]);
 export default router;

@@ -79,21 +79,36 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // Check if there are any related records before deleting
-
-        // Delete the image file from storage if it exists
-        if ($category->image_url) {
-            $imagePath = public_path('storage/' . $category->image_url);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            } else {
-                Log::warning('File does not exist: ' . $imagePath);
+        try {
+            // Delete all food images first
+            foreach ($category->foods as $food) {
+                if ($food->image_url) {
+                    $foodImagePath = public_path('storage/' . $food->image_url);
+                    if (file_exists($foodImagePath)) {
+                        unlink($foodImagePath);
+                    }
+                }
             }
+
+            // Delete category image
+            if ($category->image_url) {
+                $categoryImagePath = public_path('storage/' . $category->image_url);
+                if (file_exists($categoryImagePath)) {
+                    unlink($categoryImagePath);
+                }
+            }
+
+            // The category deletion will cascade to foods due to the model relationship
+            $category->delete();
+
+            return response()->json([
+                'message' => 'Danh mục và các món ăn liên quan đã được xóa thành công'
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error deleting category: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Không thể xóa danh mục. Vui lòng thử lại sau.'
+            ], 500);
         }
-
-        // Delete the category
-        $category->delete();
-
-        return response()->json(['message' => 'Danh mục đã được xóa thành công'], 200);
     }
 }

@@ -1,0 +1,150 @@
+.list {
+    padding: 20px;
+}
+
+.list h2 {
+    margin-bottom: 20px;
+    color: #333;
+    align-items: center;
+}
+
+.list-table {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.list-table-format {
+    display: grid;
+    grid-template-columns: 100px 150px 100px 1fr 100px 50px 150px;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.list-table-format.title {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+}
+
+.food-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.food-name {
+    cursor: pointer;
+}   
+
+.food-category {
+    cursor: pointer;
+}   
+
+.food-description {
+    cursor: pointer;
+    width: 90%;
+}
+
+.food-price {
+    cursor: pointer;
+}   
+
+.food-quantity {
+    cursor: pointer;
+}   
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.view-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+    background-color: #0069d9;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Loading */
+
+/* From Uiverse.io by adamgiebl */
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        background-color: #b3d4fc;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: #6793fb;
+        box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        background-color: #b3d4fc;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+}

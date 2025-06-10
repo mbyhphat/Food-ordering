@@ -27,14 +27,23 @@ function List() {
   };
 
   const handleDelete = async (id) => {
-    if (confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
+    if (
+      confirm(
+        "Xóa danh mục này sẽ xóa tất cả các món ăn thuộc danh mục này. Bạn có chắc chắn muốn xóa?"
+      )
+    ) {
       try {
         await axiosClient.delete(`/category/${id}`);
-        toast.success("Xóa danh mục thành công");
+        toast.success("Xóa danh mục và các món ăn liên quan thành công");
         fetchCategories();
       } catch (error) {
         console.error("Delete error:", error);
-        toast.error("Xóa danh mục thất bại");
+        const response = error.response;
+        if (response && response.data && response.data.message) {
+          toast.error(response.data.message);
+        } else {
+          toast.error("Xóa danh mục thất bại");
+        }
       }
     }
   };

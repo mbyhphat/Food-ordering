@@ -44,10 +44,6 @@ CREATE TABLE Orders (
     delivery_address LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     contact_phone VARCHAR(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     total_money INT NOT NULL,
-    delivery_fee INT DEFAULT 0,
-    status TINYINT NOT NULL, -- 0: Ch? x? lý, 1: ?ã x? lý, 2: H?y
-    payment_method TINYINT NOT NULL, -- 0: Ti?n m?t, 1: Thanh toán online
-    notes LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 );
 
 CREATE TABLE Orders_Details (

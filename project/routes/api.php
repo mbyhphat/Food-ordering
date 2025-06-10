@@ -32,7 +32,6 @@ Route::middleware(['auth:sanctum', 'check.role:0'])->group(function () {
     Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
 });
 
-<<<<<<< HEAD
 // Admin routes (role 1)
 Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
     Route::apiResource('users', UserController::class);
@@ -41,7 +40,6 @@ Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
     // Admin food routes (except index which is public)
     Route::apiResource('food', FoodController::class)->except(['index']);
 });
-=======
 // Route::middleware(['check.role:1'])->get('/test-role', function () {
 //     return 'Middleware chạy rồi!';
 // });
@@ -50,4 +48,4 @@ Route::apiResource('promotions', PromotionController::class);
 //Plot biểu đồ 
 Route::get('/analytics', [AnalyticsController::class, 'getAnalytics']);
 
->>>>>>> Thang
+

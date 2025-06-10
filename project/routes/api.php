@@ -8,6 +8,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -37,3 +39,8 @@ Route::apiResource('food', FoodController::class);
 // Route::middleware(['check.role:1'])->get('/test-role', function () {
 //     return 'Middleware chạy rồi!';
 // });
+// API MÃ GIẢM GIÁ 
+Route::apiResource('promotions', PromotionController::class);
+//Plot biểu đồ 
+Route::get('/analytics', [AnalyticsController::class, 'getAnalytics']);
+

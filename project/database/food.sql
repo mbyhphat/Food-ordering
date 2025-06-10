@@ -60,14 +60,17 @@ CREATE TABLE Orders_Details (
 
 CREATE TABLE Carts (
 	cart_id INT AUTO_INCREMENT PRIMARY KEY,
-	customer_id INT NOT NULL
+	customer_id INT NOT NULL,
+    total_money DECIMAL(10, 2) DEFAULT 0,
+    UNIQUE KEY unique_customer (customer_id)
 );
 
 CREATE TABLE Carts_Details (
-	cart_id INT NOT NULL,
-	food_id INT NOT NULL,
-	quantity INT NOT NULL DEFAULT 1,
-    PRIMARY KEY (cart_id, food_id)
+    cart_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    food_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    PRIMARY KEY (cart_id, customer_id, food_id)
 );
 
 CREATE TABLE Promotions (

@@ -5,11 +5,15 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/cart', [CartController::class, 'getCart']);
+    Route::post('/cart', [CartController::class, 'updateCart']);
+    Route::delete('/cart', [CartController::class, 'clearCart']);
 });
 
 // Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {

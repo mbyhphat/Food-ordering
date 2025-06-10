@@ -9,34 +9,59 @@ const StoreContextProvider = (props) => {
     const [food_list, setFoodList] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user } = useAppContext();
-    const [cartItems, setCartItems] = useState(() => {
-        const storedUser = JSON.parse(localStorage.getItem("USER_INFO"));
-        if (storedUser?.id) {
-            const savedCart = localStorage.getItem(`ORDER_${storedUser.id}`);
-            console.log(localStorage);
-            return savedCart ? JSON.parse(savedCart) : {};
-        }
-        return {};
-    });
+    const [cartItems, setCartItems] = useState({});
 
     useEffect(() => {
         fetchFoodData();
     }, []);
 
-    // Save order to localStorage whenever it changes
     useEffect(() => {
         if (user?.id) {
-            localStorage.setItem(`ORDER_${user.id}`, JSON.stringify(cartItems));
-            console.log(localStorage);
-            console.log(cartItems);
-        }
-    }, [cartItems, user]);
-
-    useEffect(() => {
-        if (!user?.id) {
+            fetchCartData();
+        } else {
             setCartItems({});
         }
     }, [user]);
+
+    const fetchCartData = async () => {
+        try {
+            const { data } = await axiosClient.get("/cart");
+            setCartItems(data.cart || {});
+        } catch (err) {
+            console.error("Error fetching cart:", err);
+        }
+    };
+
+    const saveCartToServer = async (newCartItems) => {
+        if (user?.id) {
+            try {
+                // Calculate total amount before saving
+                let totalAmount = 0;
+                for (const itemId in newCartItems) {
+                    if (newCartItems[itemId] > 0) {
+                        const itemInfo = food_list.find(
+                            (product) => product.item_id === parseInt(itemId)
+                        );
+                        if (itemInfo) {
+                            totalAmount +=
+                                itemInfo.price * newCartItems[itemId];
+                        }
+                    }
+                }
+
+                await axiosClient.post("/cart", {
+                    cartItems: newCartItems,
+                    totalAmount: totalAmount,
+                });
+            } catch (err) {
+                console.error("Error saving cart:", err);
+                toast.error("Failed to save cart to server", {
+                    autoClose: 1000,
+                    position: "top-center",
+                });
+            }
+        }
+    };
 
     const fetchFoodData = async () => {
         try {
@@ -58,7 +83,6 @@ const StoreContextProvider = (props) => {
         setCartItems((prev) => {
             const newQuantity = (prev[itemId] || 0) + 1;
 
-            // Kiểm tra số lượng ngay tại đây
             if (newQuantity > maxQuantity) {
                 toast.error(
                     "Rất tiếc, cửa hàng không còn đủ số lượng món ăn mà bạn muốn đặt!",
@@ -67,26 +91,36 @@ const StoreContextProvider = (props) => {
                         position: "top-center",
                     }
                 );
-                // Trả về state cũ nếu vượt quá số lượng
                 return prev;
             }
 
-            // Nếu ok thì cập nhật state mới
-            return {
+            const newCart = {
                 ...prev,
                 [itemId]: newQuantity,
             };
+
+            saveCartToServer(newCart);
+            return newCart;
         });
     };
 
     const removeFromCart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+        setCartItems((prev) => {
+            const newCart = { ...prev, [itemId]: prev[itemId] - 1 };
+            saveCartToServer(newCart);
+            return newCart;
+        });
     };
 
-    const clearCart = () => {
+    const clearCart = async () => {
+        if (user?.id) {
+            try {
+                await axiosClient.delete("/cart");
+            } catch (err) {
+                console.error("Error clearing cart:", err);
+            }
+        }
         setCartItems({});
-        // Xóa cart khỏi localStorage
-        localStorage.removeItem("cartItems");
     };
 
     const getTotalCartAmount = () => {
@@ -104,7 +138,8 @@ const StoreContextProvider = (props) => {
 
     const handleQuantityChange = (itemId, value, quantity, chat = false) => {
         const newQuantity = parseInt(value, 10); // Convert input (string) to a number
-
+        console.log("newQuantity:", newQuantity);
+        console.log("quantity:", quantity);
         if (isNaN(newQuantity) || newQuantity < 0) return; // Prevent invalid input (Nan when input="abc")
         if (newQuantity > quantity) {
             if (!chat) {
@@ -120,7 +155,11 @@ const StoreContextProvider = (props) => {
             return;
         }
 
-        setCartItems((prev) => ({ ...prev, [itemId]: newQuantity }));
+        setCartItems((prev) => {
+            const newCart = { ...prev, [itemId]: newQuantity };
+            saveCartToServer(newCart);
+            return newCart;
+        });
     };
 
     const getTotalCart = () => {

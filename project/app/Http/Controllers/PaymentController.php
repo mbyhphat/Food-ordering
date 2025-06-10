@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-     public function vnpay_payment(Request $request)
+  public function vnpay_payment(Request $request)
   {
     $data = $request->all();
     $code_cart = rand(00, 9999);
     $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    $vnp_Returnurl = "http://localhost:8000/api/vnpay_return";
+    $vnp_Returnurl = "http://localhost:8001/api/vnpay_return";
     $vnp_TmnCode = "L8EFGN9D"; //Mã website tại VNPAY 
     $vnp_HashSecret = "F0KX0WOS2RPRR6DI5H7F6Z8GB7CSD3RY"; //Chuỗi bí mật
 
     $vnp_TxnRef = $code_cart; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
     $vnp_OrderInfo = 'Thanh toán đơn hàng đặt đồ ăn';
     $vnp_OrderType = 'Mama Kitchen';
-    
+
     // Sử dụng giá trị từ request thay vì giá trị cố định
     $vnp_Amount = $request->input('amount', 1000) * 100; // Sử dụng giá trị mặc định 1000 nếu không có giá trị từ request
-    
+
     $vnp_Locale = 'vn';
     // $vnp_BankCode = 'NCB';
     $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -113,18 +113,18 @@ class PaymentController extends Controller
             // Hiển thị thông báo thành công trước
             setTimeout(function() {
                 // Xóa tất cả localStorage và sessionStorage
-                localStorage.clear();
-                sessionStorage.clear();
+                // localStorage.clear();
+                // sessionStorage.clear();
                 
                 // Chuyển hướng về trang chính và reload
                 window.location.replace("http://localhost:3000/");
-            }, 5000); // Đợi 5 giây để người dùng đọc thông báo
+            }, 1000); // Đợi 5 giây để người dùng đọc thông báo
             
             // Backup: nếu replace không hoạt động
             setTimeout(function() {
                 window.location.href = "http://localhost:3000/";
                 window.location.reload(true);
-            }, 2500);
+            }, 1500);
         </script>
     </head>
     <body>
@@ -135,7 +135,7 @@ class PaymentController extends Controller
         <p class="loading">Đang chuyển về trang chính...</p>
     </body>
     </html>';
-    
+
     return response($html)->header('Content-Type', 'text/html');
   }
 }

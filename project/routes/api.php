@@ -6,6 +6,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/cart', [CartController::class, 'getCart']);
     Route::post('/cart', [CartController::class, 'updateCart']);
     Route::delete('/cart', [CartController::class, 'clearCart']);
+    Route::post('/orders', [OrdersController::class, 'store']);
 });
 
 // Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {

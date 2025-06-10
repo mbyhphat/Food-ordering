@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useAppContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
 
 const PlaceOrder = () => {
-    const { getTotalCartAmount, clearCart } = useContext(StoreContext);
+    const { getTotalCartAmount, clearCart, cartItems, food_list } =
+        useContext(StoreContext);
     const { user } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -30,13 +30,40 @@ const PlaceOrder = () => {
                 return;
             }
 
-            // Gửi dữ liệu thanh toán với key rõ ràng hơn
+            // Tạo đơn hàng trước
+            const orderData = {
+                user_id: user.id,
+                delivery_address: user.address,
+                contact_phone: user.phone,
+                total_money: totalAmount,
+                cart_items: Object.entries(cartItems).map(
+                    ([food_id, quantity]) => {
+                        const food = food_list.find(
+                            (f) => f.item_id === parseInt(food_id)
+                        );
+                        return {
+                            food_id: parseInt(food_id),
+                            quantity,
+                            price: food.price,
+                        };
+                    }
+                ),
+            };
+
+            const orderResponse = await axiosClient.post("/orders", orderData);
+
+            if (!orderResponse.data?.order_id) {
+                throw new Error("Không thể tạo đơn hàng");
+            }
+
+            // Gửi dữ liệu thanh toán đến VNPAY với thông tin đơn hàng
             const response = await axiosClient.post("/vnpay_payment", {
-                amount: totalAmount, // Đổi key từ '1000' thành 'amount'
+                amount: totalAmount,
                 name: user.name,
                 email: user.email,
                 address: user.address,
                 phone: user.phone,
+                order_id: orderResponse.data.order_id,
             });
 
             // Kiểm tra response

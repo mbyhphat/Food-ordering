@@ -30,12 +30,11 @@ Route::middleware(['auth:sanctum', 'check.role:0'])->group(function () {
     Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
 });
 
-// Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
-
-// });
-
+// Admin routes (role 1)
 Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
     Route::apiResource('users', UserController::class);
-    Route::apiResource('category', CategoryController::class);
-    Route::apiResource('food', FoodController::class);
+    // Admin category routes (except index which is public)
+    Route::apiResource('category', CategoryController::class)->except(['index']);
+    // Admin food routes (except index which is public)
+    Route::apiResource('food', FoodController::class)->except(['index']);
 });

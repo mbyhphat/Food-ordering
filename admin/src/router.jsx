@@ -7,7 +7,7 @@ import List from "./pages/List/List";
 import AddFood from "./pages/AddFood/AddFood";
 import ListFood from "./pages/ListFood/ListFood";
 import Analytics from "./pages/Analytics/Analytics";
-import Voucher from "./pages/Voucher/Voucher";
+import Voucher from "./pages/Voucher/voucher";
 import CategoryDetail from "./pages/CategoryDetail/CategoryDetail";
 import FoodDetail from "./pages/FoodDetail/FoodDetail";
 import Login from "./pages/Login/Login";

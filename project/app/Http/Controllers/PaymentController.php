@@ -125,6 +125,7 @@ class PaymentController extends Controller
                 window.location.href = "http://localhost:3000/";
                 window.location.reload(true);
             }, 1500);
+            }, 1500);
         </script>
     </head>
     <body>

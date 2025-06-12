@@ -24,7 +24,7 @@ class AnalyticsController extends Controller
             ->whereYear('order_date', $year)
             ->sum('total_money');
 
-        // Tổng món ăn bán được
+        // Tổng món ăn bán được trong tháng
         $totalFoodItems = DB::table('orders_details as od')
             ->join('orders as o', 'od.order_id', '=', 'o.order_id')
             ->whereMonth('o.order_date', $month)

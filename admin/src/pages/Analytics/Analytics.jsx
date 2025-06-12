@@ -178,7 +178,7 @@ function Analytics() {
         <div className="overview-card">
           <div className="card-icon food">🍽️</div>
           <div className="card-content">
-            <h3>Tổng số món ăn bán được</h3>
+            <h3>Tổng số món ăn bán được </h3>
             <div className="card-number">
               {formatNumber(analytics.totalFoodItems)}
             </div>

@@ -77,6 +77,7 @@ class OrderTakingAgent:
         input_messages = [{"role": "system", "content": system_prompt}] + messages
         chatbot_output = get_chatbot_response(input_messages)
         output = self.postprocess(chatbot_output)
+        print(output)
         return output
 
     def postprocess(self, output):

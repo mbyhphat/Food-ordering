@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Analytics.css";
+import axiosClient from "../../axios-client";
 
 function Analytics() {
   const [analytics, setAnalytics] = useState({
@@ -19,8 +20,6 @@ function Analytics() {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
-  const API_BASE = "http://localhost:8000/api";
-
   useEffect(() => {
     fetchAnalytics();
   }, [selectedMonth, selectedYear]);
@@ -30,33 +29,34 @@ function Analytics() {
       setLoading(true);
 
       // Lấy dữ liệu tháng hiện tại
-      const res = await fetch(
-        `${API_BASE}/analytics?month=${selectedMonth}&year=${selectedYear}`
-      );
+      const res = await axiosClient.get(`/analytics`, {
+        params: {
+          month: selectedMonth,
+          year: selectedYear,
+        },
+      });
 
       // Tính tháng trước
       const prevMonth = selectedMonth === 1 ? 12 : selectedMonth - 1;
       const prevYear = selectedMonth === 1 ? selectedYear - 1 : selectedYear;
 
       // Lấy dữ liệu tháng trước
-      const prevRes = await fetch(
-        `${API_BASE}/analytics?month=${prevMonth}&year=${prevYear}`
-      );
-
-      if (!res.ok) {
-        throw new Error("Lỗi khi gọi API thống kê");
-      }
-
-      const data = await res.json();
-      const prevData = prevRes.ok ? await prevRes.json() : null;
+      const prevRes = await axiosClient
+        .get(`/analytics`, {
+          params: {
+            month: prevMonth,
+            year: prevYear,
+          },
+        })
+        .catch(() => null);
 
       setAnalytics({
-        ...data,
-        previousMonth: prevData
+        ...res.data,
+        previousMonth: prevRes?.data
           ? {
-              totalOrders: prevData.totalOrders,
-              totalRevenue: prevData.totalRevenue,
-              totalFoodItems: prevData.totalFoodItems,
+              totalOrders: prevRes.data.totalOrders,
+              totalRevenue: prevRes.data.totalRevenue,
+              totalFoodItems: prevRes.data.totalFoodItems,
             }
           : null,
       });

@@ -104,8 +104,9 @@
 }
 
 .form-group.description textarea {
-    min-height: 100px;
+    /* min-height: 100px; */
     resize: vertical;
+    width: 100%;
 }
 
 .form-group input[type="file"] {

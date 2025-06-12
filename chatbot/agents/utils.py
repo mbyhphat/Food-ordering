@@ -38,7 +38,7 @@ def get_agent(system_prompt):
 
 def get_db():
     db = SQLDatabase.from_uri(
-        "mysql+mysqlconnector://root:@localhost/foodordering",
+        "mysql+mysqlconnector://root:@localhost/foodorderingfinal",
         sample_rows_in_table_info=10,
     )
     return db

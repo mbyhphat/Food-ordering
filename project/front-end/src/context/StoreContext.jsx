@@ -55,10 +55,10 @@ const StoreContextProvider = (props) => {
                 });
             } catch (err) {
                 console.error("Error saving cart:", err);
-                toast.error("Failed to save cart to server", {
-                    autoClose: 1000,
-                    position: "top-center",
-                });
+                // toast.error("Failed to save cart to server", {
+                //     autoClose: 1000,
+                //     position: "top-center",
+                // });
             }
         }
     };

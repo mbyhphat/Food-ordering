@@ -1,5 +1,5 @@
-﻿CREATE DATABASE FoodOrdering CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE FoodOrdering;
+﻿CREATE DATABASE FoodOrderingFinal CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE FoodOrderingFinal;
 
 CREATE TABLE Account (
    id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +43,7 @@ CREATE TABLE Orders (
     order_date DATE NOT NULL,
     delivery_address LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     contact_phone VARCHAR(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    total_money INT NOT NULL,
+    total_money INT NOT NULL
 );
 
 CREATE TABLE Orders_Details (
@@ -79,18 +79,6 @@ CREATE TABLE Promotions (
     end_date DATE NOT NULL
 );
 
-CREATE TABLE Food_Promotions (
-   food_id INT NOT NULL,
-   promotion_id INT NOT NULL,
-   PRIMARY KEY (promotion_id, food_id)
-);
-
-CREATE TABLE Category_Promotions (
-   category_id INT NOT NULL,
-   promotion_id INT NOT NULL,
-   PRIMARY KEY (promotion_id, category_id)
-);
-
 ALTER TABLE Food_Items ADD CONSTRAINT FK_FOOD_CATEGORY FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE RESTRICT;
 
 ALTER TABLE Orders ADD CONSTRAINT FK_ORDER_CUSTOMER FOREIGN KEY (user_id) REFERENCES Account(id) ON DELETE RESTRICT;
@@ -102,12 +90,6 @@ ALTER TABLE Carts_Details ADD CONSTRAINT FK_CARTDETAILS_CART FOREIGN KEY (cart_i
 
 ALTER TABLE Orders_Details ADD CONSTRAINT FK_ORDERDETAILS_FOOD FOREIGN KEY (food_id) REFERENCES Food_Items(item_id) ON DELETE RESTRICT;
 ALTER TABLE Orders_Details ADD CONSTRAINT FK_ORDERDETAILS_ORDER FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE RESTRICT;
-
-ALTER TABLE Food_Promotions ADD CONSTRAINT FK_FOODPROMOTIONS_PROMOTION FOREIGN KEY (promotion_id) REFERENCES Promotions(id) ON DELETE RESTRICT;
-ALTER TABLE Food_Promotions ADD CONSTRAINT FK_FOODPROMOTIONS_FOOD FOREIGN KEY (food_id) REFERENCES Food_Items(item_id) ON DELETE RESTRICT;
-
-ALTER TABLE Category_Promotions ADD CONSTRAINT FK_CATEGORYPROMOTIONS_PROMOTION FOREIGN KEY (promotion_id) REFERENCES Promotions(id) ON DELETE RESTRICT;
-ALTER TABLE Category_Promotions ADD CONSTRAINT FK_CATEGORYPROMOTIONS_CATEGORY FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE RESTRICT;
 
 INSERT INTO Account (name,email,phone,address,password,role) VALUES 
 ('Phát', 'admin@gmail.com', '0123456789', 'HCM', '$2y$12$LKOd5DvPOG7BLe123V0VTu7sXf7fZXAWocMo/2n7NVf8kGUlnzqmW',1),
@@ -153,3 +135,32 @@ INSERT INTO Food_Items (category_id, name, description, price, image_url, quanti
 (6, 'Lẩu nấm hải sản truyền thống', 'Lẩu nấm hải sản thanh ngọt với nước dùng ninh từ nấm tự nhiên, kết hợp cùng tôm, mực, ngao tươi ngon. Món ăn bổ dưỡng, thanh đạm nhưng không kém phần hấp dẫn.', 400000, 'lau_hai_san.jpg', 8),
 (6, 'Lẩu gà tiềm ớt hiểm', 'Lẩu gà tiềm ớt hiểm với gà ta hầm mềm, nước dùng thơm ngon, cay nhẹ từ ớt hiểm giúp kích thích vị giác. Món ăn bổ dưỡng, thích hợp cho những ngày se lạnh.', 380000, 'lau_ga.jpg', 3);
 
+INSERT INTO Orders (user_id, order_date, delivery_address, contact_phone, total_money) VALUES
+(2, '2025-01-08', '123 Lê Lợi, Q1, HCM', '0912345678', 690000),
+(2, '2025-02-20', '123 Lê Lợi, Q1, HCM', '0912345678', 850000),
+(2, '2025-03-01', '22 Lý Tự Trọng, Q1', '0123123123', 1480000),
+(2, '2025-04-08', '123 Lê Lợi, Q1, HCM', '0912345678', 1910000),
+(2, '2025-05-04', '22 Lý Tự Trọng, Q1', '0912345678', 1390000),
+(2, '2025-06-28', '789 Điện Biên Phủ, Bình Thạnh', '0123123123', 1100000);
+
+
+
+INSERT INTO Orders_Details (food_id, order_id, quantity, price) VALUES
+(1, 1, 1, 100000),
+(2, 1, 1, 120000),
+(3, 1, 1, 450000),
+(4, 2, 1, 480000),
+(5, 2, 1, 350000),
+(6, 3, 1, 370000),
+(7, 3, 2, 250000),
+(8, 3, 1, 270000),
+(9, 3, 1, 320000),
+(10, 4, 3, 350000),
+(11, 4, 3, 280000),
+(12, 5, 1, 320000),
+(13, 5, 3, 350000),
+(14, 6, 3, 360000);
+
+INSERT INTO Promotions (code, description, discount_percentage, min_order_value, start_date, end_date) VALUES
+('PROMO10', 'Giảm 10% chào mừng ngày thành lập nhà hàng', 10, 00, '2025-01-01', '2025-12-31'),
+('PROMO20', 'Giảm 20% cho đơn hàng trên 1.000.000đ', 20, 1000000, '2025-01-01', '2025-12-31');

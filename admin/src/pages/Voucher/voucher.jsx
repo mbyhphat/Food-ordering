@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./voucher.css";
+import axiosClient from "../../axios-client";
 
 function Voucher() {
   const [vouchers, setVouchers] = useState([]);
@@ -15,8 +16,7 @@ function Voucher() {
     end_date: "",
   });
 
-  // API base URL - Laravel với XAMPP
-  const API_BASE_URL = "http://localhost:8000/api/promotions"; // Laravel với XAMPP
+  const API_ENDPOINT = "promotions";
 
   // Lấy danh sách voucher từ database
   useEffect(() => {
@@ -26,16 +26,10 @@ function Voucher() {
   const fetchVouchers = async () => {
     try {
       setLoading(true);
-      const response = await fetch(API_BASE_URL);
-      if (response.ok) {
-        const data = await response.json();
-        setVouchers(data);
-      } else {
-        console.error("Lỗi khi lấy danh sách voucher");
-        setVouchers([]);
-      }
+      const response = await axiosClient.get(API_ENDPOINT);
+      setVouchers(response.data);
     } catch (error) {
-      console.error("Lỗi kết nối API:", error);
+      console.error("Lỗi khi lấy danh sách voucher:", error);
       setVouchers([]);
     } finally {
       setLoading(false);
@@ -58,48 +52,29 @@ function Voucher() {
 
       if (editingVoucher) {
         // Cập nhật voucher
-        const response = await fetch(`${API_BASE_URL}/${editingVoucher.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          const updatedVoucher = await response.json();
-          setVouchers((prev) =>
-            prev.map((voucher) =>
-              voucher.id === editingVoucher.id ? updatedVoucher : voucher
-            )
-          );
-          alert("Cập nhật voucher thành công!");
-        } else {
-          alert("Lỗi khi cập nhật voucher");
-        }
+        const response = await axiosClient.put(
+          `${API_ENDPOINT}/${editingVoucher.id}`,
+          formData
+        );
+        const updatedVoucher = response.data;
+        setVouchers((prev) =>
+          prev.map((voucher) =>
+            voucher.id === editingVoucher.id ? updatedVoucher : voucher
+          )
+        );
+        alert("Cập nhật voucher thành công!");
       } else {
         // Thêm voucher mới
-        const response = await fetch(API_BASE_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          const newVoucher = await response.json();
-          setVouchers((prev) => [...prev, newVoucher]);
-          alert("Thêm voucher thành công!");
-        } else {
-          alert("Lỗi khi thêm voucher");
-        }
+        const response = await axiosClient.post(API_ENDPOINT, formData);
+        const newVoucher = response.data;
+        setVouchers((prev) => [...prev, newVoucher]);
+        alert("Thêm voucher thành công!");
       }
 
       resetForm();
     } catch (error) {
-      console.error("Lỗi kết nối API:", error);
-      alert("Lỗi kết nối server");
+      console.error("Lỗi:", error);
+      alert(error.response?.data?.message || "Lỗi kết nối server");
     } finally {
       setLoading(false);
     }
@@ -122,19 +97,12 @@ function Voucher() {
     if (window.confirm("Bạn có chắc chắn muốn xóa voucher này?")) {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/${id}`, {
-          method: "DELETE",
-        });
-
-        if (response.ok) {
-          setVouchers((prev) => prev.filter((voucher) => voucher.id !== id));
-          alert("Xóa voucher thành công!");
-        } else {
-          alert("Lỗi khi xóa voucher");
-        }
+        await axiosClient.delete(`${API_ENDPOINT}/${id}`);
+        setVouchers((prev) => prev.filter((voucher) => voucher.id !== id));
+        alert("Xóa voucher thành công!");
       } catch (error) {
-        console.error("Lỗi kết nối API:", error);
-        alert("Lỗi kết nối server");
+        console.error("Lỗi:", error);
+        alert(error.response?.data?.message || "Lỗi kết nối server");
       } finally {
         setLoading(false);
       }

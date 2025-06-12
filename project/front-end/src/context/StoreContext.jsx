@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import axiosClient from "../axios-client";
 import { useAppContext } from "./ContextProvider";
@@ -10,6 +10,7 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const { user } = useAppContext();
     const [cartItems, setCartItems] = useState({});
+    const [appliedVoucher, setAppliedVoucher] = useState(null);
 
     useEffect(() => {
         fetchFoodData();
@@ -123,18 +124,20 @@ const StoreContextProvider = (props) => {
         setCartItems({});
     };
 
-    const getTotalCartAmount = () => {
+    const getTotalCartAmount = useCallback(() => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                let intemInfo = food_list.find(
+                let itemInfo = food_list.find(
                     (product) => product.item_id === parseInt(item)
                 );
-                totalAmount += intemInfo.price * cartItems[item];
+                if (itemInfo) {
+                    totalAmount += itemInfo.price * cartItems[item];
+                }
             }
         }
         return totalAmount;
-    };
+    }, [cartItems, food_list]);
 
     const handleQuantityChange = (itemId, value, quantity, chat = false) => {
         const newQuantity = parseInt(value, 10); // Convert input (string) to a number
@@ -172,6 +175,93 @@ const StoreContextProvider = (props) => {
         return total;
     };
 
+    const applyVoucher = async (code) => {
+        try {
+            const response = await axiosClient.get(`/promotions?code=${code}`);
+            const vouchers = response.data;
+
+            if (!vouchers || vouchers.length === 0) {
+                toast.error("Mã giảm giá không hợp lệ");
+                return false;
+            }
+
+            const voucher = vouchers.find((v) => v.code === code);
+            if (!voucher) {
+                toast.error("Mã giảm giá không hợp lệ");
+                return false;
+            }
+
+            const now = new Date();
+            const startDate = new Date(voucher.start_date);
+            const endDate = new Date(voucher.end_date);
+
+            if (now < startDate || now > endDate) {
+                toast.error("Mã giảm giá đã hết hạn hoặc chưa có hiệu lực");
+                return false;
+            }
+
+            const cartTotal = getTotalCartAmount();
+            if (cartTotal < voucher.min_order_value) {
+                toast.error(
+                    `Đơn hàng tối thiểu ${voucher.min_order_value}đ để áp dụng mã này`
+                );
+                return false;
+            }
+
+            setAppliedVoucher(voucher);
+            toast.success("Áp dụng mã giảm giá thành công!");
+            return true;
+        } catch (error) {
+            console.error("Voucher error:", error);
+            toast.error("Có lỗi xảy ra khi áp dụng mã giảm giá");
+            return false;
+        }
+    };
+
+    const removeVoucher = () => {
+        setAppliedVoucher(null);
+    };
+
+    const calculateDiscount = () => {
+        if (!appliedVoucher) return 0;
+        const cartTotal = getTotalCartAmount();
+        return Math.round(
+            (cartTotal * appliedVoucher.discount_percentage) / 100
+        );
+    };
+
+    const getFinalTotal = () => {
+        const cartTotal = getTotalCartAmount();
+        const deliveryFee = cartTotal === 0 ? 0 : 20000;
+        const discount = calculateDiscount();
+        return cartTotal + deliveryFee - discount;
+    };
+
+    const validateVoucherConditions = useCallback(() => {
+        if (!appliedVoucher) return;
+
+        const cartTotal = getTotalCartAmount();
+        const now = new Date();
+        const startDate = new Date(appliedVoucher.start_date);
+        const endDate = new Date(appliedVoucher.end_date);
+
+        if (
+            now < startDate ||
+            now > endDate ||
+            cartTotal < appliedVoucher.min_order_value
+        ) {
+            setAppliedVoucher(null);
+            toast.warning(
+                "Mã giảm giá đã bị gỡ bỏ do không còn thỏa điều kiện áp dụng"
+            );
+        }
+    }, [appliedVoucher, getTotalCartAmount]);
+
+    // Monitor cart changes
+    useEffect(() => {
+        validateVoucherConditions();
+    }, [cartItems, validateVoucherConditions]);
+
     const contextValue = {
         food_list,
         cartItems,
@@ -181,8 +271,13 @@ const StoreContextProvider = (props) => {
         handleQuantityChange,
         getTotalCartAmount,
         loading,
-        getTotalCart, // thêm dòng này để export hàm ra context
+        getTotalCart,
         clearCart,
+        applyVoucher,
+        removeVoucher,
+        appliedVoucher,
+        calculateDiscount,
+        getFinalTotal,
     };
 
     return (

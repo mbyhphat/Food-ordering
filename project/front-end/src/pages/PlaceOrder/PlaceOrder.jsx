@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
 
 const PlaceOrder = () => {
-    const { getTotalCartAmount, clearCart, cartItems, food_list } =
+    const { getFinalTotal, clearCart, cartItems, food_list } =
         useContext(StoreContext);
     const { user } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +23,8 @@ const PlaceOrder = () => {
             }
 
             // Kiểm tra số tiền
-            const deliveryFee = getTotalCartAmount() === 0 ? 0 : 20000;
-            const totalAmount = getTotalCartAmount() + deliveryFee;
+            const deliveryFee = getFinalTotal() === 0 ? 0 : 20000;
+            const totalAmount = getFinalTotal() + deliveryFee;
             if (totalAmount <= 0) {
                 setError("Giỏ hàng trống, vui lòng thêm sản phẩm!");
                 return;
@@ -119,20 +119,20 @@ const PlaceOrder = () => {
                     <div>
                         <div className="cart-total-details">
                             <p>Tổng tiền món ăn </p>
-                            <p>{getTotalCartAmount()} vnđ</p>
+                            <p>{getFinalTotal()} vnđ</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Phí giao hàng</p>
-                            <p>{getTotalCartAmount() === 0 ? 0 : 20000} vnđ</p>
+                            <p>{getFinalTotal() === 0 ? 0 : 20000} vnđ</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Tổng tiền </p>
                             <b>
-                                {getTotalCartAmount() === 0
+                                {getFinalTotal() === 0
                                     ? 0
-                                    : getTotalCartAmount() + 20000}{" "}
+                                    : getFinalTotal() + 20000}{" "}
                                 vnđ
                             </b>
                         </div>

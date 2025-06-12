@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
@@ -10,20 +10,32 @@ const Cart = () => {
         removeFromCart,
         getTotalCartAmount,
         loading,
+        applyVoucher,
+        removeVoucher,
+        appliedVoucher,
+        calculateDiscount,
+        getFinalTotal,
     } = useContext(StoreContext);
     const navigate = useNavigate();
+    const [voucherCode, setVoucherCode] = useState("");
+
     if (loading)
         return (
             <div className="loading-section">
-                <section class="dots-container">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+                <section className="dots-container">
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
                 </section>
             </div>
         );
+
+    const handleApplyVoucher = async () => {
+        if (!voucherCode.trim()) return;
+        const success = await applyVoucher(voucherCode);
+    };
 
     // Function to handle checkout navigation
     const handleCheckout = () => {
@@ -35,12 +47,12 @@ const Cart = () => {
         <div className="cart">
             <div className="cart-items">
                 <div className="cart-items-title">
-                    <p>Items</p>
-                    <p>Title</p>
-                    <p>Price</p>
-                    <p>Quantity</p>
-                    <p>Total</p>
-                    <p>Remove</p>
+                    <p>Sản phẩm</p>
+                    <p>Món ăn</p>
+                    <p>Đơn giá</p>
+                    <p>Số lượng</p>
+                    <p>Tổng tiền</p>
+                    <p>Loại bỏ</p>
                 </div>
                 <br />
                 <hr />
@@ -75,25 +87,33 @@ const Cart = () => {
             </div>
             <div className="cart-bottom">
                 <div className="cart-total">
-                    <h2>Cart Tatals</h2>
+                    <h2>Giỏ hàng</h2>
                     <div>
                         <div className="cart-total-details">
                             <p>Tổng tiền món ăn </p>
-                            <p>{getTotalCartAmount()}</p>
+                            <p>{getTotalCartAmount()} VND</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Phí Giao hàng</p>
-                            <p>{getTotalCartAmount() === 0 ? 0 : 20000}</p>
+                            <p>{getTotalCartAmount() === 0 ? 0 : 20000} VND</p>
                         </div>
+                        {appliedVoucher && (
+                            <>
+                                <hr />
+                                <div className="cart-total-details">
+                                    <p>
+                                        Giảm giá (
+                                        {appliedVoucher.discount_percentage}%){" "}
+                                    </p>
+                                    <p>-{calculateDiscount()} VND</p>
+                                </div>
+                            </>
+                        )}
                         <hr />
                         <div className="cart-total-details">
                             <p>Tổng tiền</p>
-                            <b>
-                                {getTotalCartAmount() === 0
-                                    ? 0
-                                    : getTotalCartAmount() + 20000}
-                            </b>
+                            <b>{getFinalTotal()} VND</b>
                         </div>
                     </div>
                     <button onClick={handleCheckout}>
@@ -104,9 +124,31 @@ const Cart = () => {
                     <div>
                         <p>Nếu bạn có mã khuyến mãi hãy nhập vào đây </p>
                         <div className="cart-promocode-input">
-                            <input type="text" placeholder="Mã khuyến mãi " />
-                            <button>Nộp </button>
+                            <input
+                                type="text"
+                                placeholder="Mã khuyến mãi"
+                                value={voucherCode}
+                                onChange={(e) => setVoucherCode(e.target.value)}
+                            />
+                            {appliedVoucher ? (
+                                <button
+                                    onClick={removeVoucher}
+                                    className="remove-voucher"
+                                >
+                                    Hủy mã
+                                </button>
+                            ) : (
+                                <button onClick={handleApplyVoucher}>
+                                    Áp dụng
+                                </button>
+                            )}
                         </div>
+                        {appliedVoucher && (
+                            <p className="applied-voucher">
+                                Đã áp dụng mã giảm giá: {appliedVoucher.code} (
+                                {appliedVoucher.discount_percentage}%)
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

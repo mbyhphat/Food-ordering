@@ -95,6 +95,7 @@ function Analytics() {
 
   const formatPercentageChange = (current, previous) => {
     const change = calculatePercentageChange(current, previous);
+    console.log("Current:", current, "Previous:", previous, "Change:", change);
     if (change === null) return "Không có dữ liệu so sánh";
 
     const isPositive = change >= 0;
@@ -177,7 +178,7 @@ function Analytics() {
         <div className="overview-card">
           <div className="card-icon food">🍽️</div>
           <div className="card-content">
-            <h3>Món ăn</h3>
+            <h3>Tổng số món ăn bán được</h3>
             <div className="card-number">
               {formatNumber(analytics.totalFoodItems)}
             </div>

@@ -1,32 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useAppContext } from "../../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 
 const PlaceOrder = () => {
     const { getFinalTotal, clearCart, cartItems, food_list } =
         useContext(StoreContext);
     const { user } = useAppContext();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Validate cart is not empty
+    useEffect(() => {
+        if (Object.keys(cartItems).length === 0 || getFinalTotal() <= 0) {
+            navigate("/cart");
+        }
+    }, [cartItems, getFinalTotal, navigate]);
 
     const handleVnpayPayment = async () => {
         try {
             setIsLoading(true);
             setError(null);
 
+            // Lưu trữ giỏ hàng hiện tại để khôi phục nếu có lỗi
+            const currentCart = { ...cartItems };
+
+            // Xóa giỏ hàng ngay lập tức khi người dùng bấm thanh toán
+            await clearCart();
+
             // Kiểm tra thông tin người dùng
             if (!user.name || !user.email || !user.address || !user.phone) {
+                // Khôi phục giỏ hàng nếu thiếu thông tin
+                await axiosClient.post("/cart", {
+                    cartItems: currentCart,
+                    totalAmount: getFinalTotal(),
+                });
                 setError("Vui lòng điền đầy đủ thông tin giao hàng!");
                 return;
             }
 
             // Kiểm tra số tiền
-            const deliveryFee = getFinalTotal() === 0 ? 0 : 20000;
-            const totalAmount = getFinalTotal() + deliveryFee;
+            const totalAmount = getFinalTotal();
             if (totalAmount <= 0) {
                 setError("Giỏ hàng trống, vui lòng thêm sản phẩm!");
+                navigate("/cart");
                 return;
             }
 
@@ -68,12 +88,17 @@ const PlaceOrder = () => {
 
             // Kiểm tra response
             if (response.data && response.data.data) {
-                // Xóa giỏ hàng trước khi chuyển đến VNPAY
-                clearCart();
+                // Xóa giỏ hàng ngay khi bắt đầu thanh toán
+                await clearCart();
 
                 // Chuyển đến trang thanh toán VNPAY
                 window.location.href = response.data.data;
             } else {
+                // Nếu có lỗi, cần khôi phục lại giỏ hàng
+                await axiosClient.post("/cart", {
+                    cartItems: cartItems,
+                    totalAmount: getFinalTotal(),
+                });
                 throw new Error(
                     response.data?.message ||
                         "Có lỗi xảy ra khi xử lý thanh toán"

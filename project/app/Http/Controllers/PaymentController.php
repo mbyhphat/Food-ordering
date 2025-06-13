@@ -113,18 +113,17 @@ class PaymentController extends Controller
             // Hiển thị thông báo thành công trước
             setTimeout(function() {
                 // Xóa tất cả localStorage và sessionStorage
-                // localStorage.clear();
-                // sessionStorage.clear();
+                localStorage.clear();
+                sessionStorage.clear();
                 
                 // Chuyển hướng về trang chính và reload
                 window.location.replace("http://localhost:3000/");
-            }, 1000); // Đợi 5 giây để người dùng đọc thông báo
+            }, 2000); // Đợi 5 giây để người dùng đọc thông báo
             
             // Backup: nếu replace không hoạt động
             setTimeout(function() {
                 window.location.href = "http://localhost:3000/";
                 window.location.reload(true);
-            }, 1500);
             }, 1500);
         </script>
     </head>

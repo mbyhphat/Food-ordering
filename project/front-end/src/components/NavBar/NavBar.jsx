@@ -124,7 +124,6 @@ const NavBar = () => {
                 </li>
             </ul>
             <div className="navbar-right">
-                <i className="fa-solid fa-magnifying-glass"></i>
                 <div className="navbar-search-icon">
                     <a href="/cart" onClick={handleCartClick}>
                         <i className="fa-solid fa-cart-shopping"></i>

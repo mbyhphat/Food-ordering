@@ -26,10 +26,6 @@ Route::middleware(['auth:sanctum', 'check.role:0'])->group(function () {
     Route::post('/cart', [CartController::class, 'updateCart']);
     Route::delete('/cart', [CartController::class, 'clearCart']);
     Route::post('/orders', [OrdersController::class, 'store']);
-    // Cổng thanh toán VNPAY
-    Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
-    // Route xử lý callback từ VNPAY
-    Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
 });
 
 // Admin routes (role 1)
@@ -40,12 +36,14 @@ Route::middleware(['auth:sanctum', 'check.role:1'])->group(function () {
     // Admin food routes (except index which is public)
     Route::apiResource('food', FoodController::class)->except(['index']);
 });
-// Route::middleware(['check.role:1'])->get('/test-role', function () {
-//     return 'Middleware chạy rồi!';
-// });
+
+// Cổng thanh toán VNPAY
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+// Route xử lý callback từ VNPAY
+Route::get('/vnpay_return', [PaymentController::class, 'vnpay_return']);
+
 // API MÃ GIẢM GIÁ 
 Route::apiResource('promotions', PromotionController::class);
+
 //Plot biểu đồ 
 Route::get('/analytics', [AnalyticsController::class, 'getAnalytics']);
-
-

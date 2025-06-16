@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../../axios-client";
 
 const Cart = () => {
     const {
@@ -18,6 +19,8 @@ const Cart = () => {
     } = useContext(StoreContext);
     const navigate = useNavigate();
     const [voucherCode, setVoucherCode] = useState("");
+    const [checkingQuantity, setCheckingQuantity] = useState(false);
+    const [quantityError, setQuantityError] = useState("");
 
     if (loading)
         return (
@@ -35,6 +38,40 @@ const Cart = () => {
     const handleApplyVoucher = async () => {
         if (!voucherCode.trim()) return;
         const success = await applyVoucher(voucherCode);
+    };
+
+    // Function to check quantities before checkout
+    const checkQuantities = async () => {
+        try {
+            setCheckingQuantity(true);
+            setQuantityError("");
+
+            // Create an array of cart items with their quantities
+            const cartItemsList = food_list
+                .filter((item) => cartItems[item.item_id] > 0)
+                .map((item) => ({
+                    food_id: item.item_id,
+                    quantity: cartItems[item.item_id],
+                }));
+
+            const response = await axiosClient.post("/check-quantities", {
+                cart_items: cartItemsList,
+            });
+
+            // If successful, proceed to checkout
+            handleCheckout();
+        } catch (error) {
+            console.error("Quantity check failed:", error);
+            if (error.response?.data?.message) {
+                setQuantityError(error.response.data.message);
+            } else {
+                setQuantityError(
+                    "Không thể kiểm tra số lượng món ăn. Vui lòng thử lại sau."
+                );
+            }
+        } finally {
+            setCheckingQuantity(false);
+        }
     };
 
     // Function to handle checkout navigation
@@ -94,10 +131,10 @@ const Cart = () => {
                             <p>{getTotalCartAmount()} VND</p>
                         </div>
                         <hr />
-                        <div className="cart-total-details">
+                        {/* <div className="cart-total-details">
                             <p>Phí Giao hàng</p>
                             <p>{getTotalCartAmount() === 0 ? 0 : 20000} VND</p>
-                        </div>
+                        </div> */}
                         {appliedVoucher && (
                             <>
                                 <hr />
@@ -116,8 +153,27 @@ const Cart = () => {
                             <b>{getFinalTotal()} VND</b>
                         </div>
                     </div>
-                    <button onClick={handleCheckout}>
-                        Tiến hành thanh toán
+                    {quantityError && (
+                        <div
+                            className="error-message"
+                            style={{
+                                color: "red",
+                                marginBottom: "10px",
+                                textAlign: "center",
+                            }}
+                        >
+                            {quantityError}
+                        </div>
+                    )}
+                    <button
+                        onClick={checkQuantities}
+                        disabled={
+                            checkingQuantity || getTotalCartAmount() === 0
+                        }
+                    >
+                        {checkingQuantity
+                            ? "Đang kiểm tra..."
+                            : "Tiến hành thanh toán"}
                     </button>
                 </div>
                 <div className="cart-promocode">

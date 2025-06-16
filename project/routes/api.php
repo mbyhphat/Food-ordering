@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', 'check.role:0'])->group(function () {
     Route::post('/cart', [CartController::class, 'updateCart']);
     Route::delete('/cart', [CartController::class, 'clearCart']);
     Route::post('/orders', [OrdersController::class, 'store']);
+    Route::post('/check-quantities', [OrdersController::class, 'checkQuantities']);
 });
 
 // Admin routes (role 1)

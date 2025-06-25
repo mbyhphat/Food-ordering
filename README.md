@@ -1,6 +1,7 @@
 # Food Ordering Website
 
 A comprehensive food ordering platform built with Laravel backend, React frontend, and AI-powered chatbot integration. This system provides role-based access control for administrators and customers, along with intelligent customer support through a multi-agent chatbot system.
+<img src="assets/homepage.jpg" alt="Mô tả ảnh" width="100%">
 
 ## Features
 
@@ -21,6 +22,7 @@ A comprehensive food ordering platform built with Laravel backend, React fronten
 - **Order Placement**: Place orders directly through chat conversation
 - **24/7 Availability**: Round-the-clock customer assistance
 - **Natural Language Processing**: Understands and responds to customer queries naturally
+<img src="assets/chatbot.jpg" alt="Mô tả ảnh" width="100%">
 
 ## Technology Stack
 
